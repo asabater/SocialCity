@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.10.1deb1
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 15-11-2013 a las 12:52:03
--- Versión del servidor: 5.5.29
--- Versión de PHP: 5.3.10-1ubuntu3.8
+-- Tiempo de generación: 17-11-2013 a las 11:43:57
+-- Versión del servidor: 5.5.25
+-- Versión de PHP: 5.3.14
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `DBuser6`
+-- Base de datos: `SocialCityDB`
 --
 
 -- --------------------------------------------------------
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `AMIGO`
 --
 
-CREATE TABLE IF NOT EXISTS `AMIGO` (
+CREATE TABLE `AMIGO` (
   `ID_AMIGO` int(9) NOT NULL AUTO_INCREMENT,
   `NOM_AMIGO` varchar(50) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`ID_AMIGO`)
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `AMIGO` (
 -- Estructura de tabla para la tabla `CIUDAD`
 --
 
-CREATE TABLE IF NOT EXISTS `CIUDAD` (
+CREATE TABLE `CIUDAD` (
   `ID_CIUDAD` int(9) NOT NULL AUTO_INCREMENT,
   `NOM_CIUDAD` varchar(50) COLLATE utf8_bin NOT NULL,
   `LINK_CIUDAD` varchar(200) COLLATE utf8_bin NOT NULL,
@@ -48,16 +48,24 @@ CREATE TABLE IF NOT EXISTS `CIUDAD` (
   PRIMARY KEY (`ID_CIUDAD`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
+--
+-- Volcado de datos para la tabla `CIUDAD`
+--
+
+INSERT INTO `CIUDAD` (`ID_CIUDAD`, `NOM_CIUDAD`, `LINK_CIUDAD`, `COMM_CIUDAD`, `PAGE_ID_CIUDAD`, `LIKE_CIUDAD`) VALUES
+(1, 'Madrid', '', '', '', 0);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `COMENTARIO`
 --
 
-CREATE TABLE IF NOT EXISTS `COMENTARIO` (
+CREATE TABLE `COMENTARIO` (
   `ID_COMENTARIO` int(9) NOT NULL AUTO_INCREMENT,
   `COM_TEXT` varchar(250) COLLATE utf8_bin NOT NULL,
   `ID_AMIGO` int(9) NOT NULL,
+  `COM_LIKEs` int(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID_COMENTARIO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
@@ -67,10 +75,10 @@ CREATE TABLE IF NOT EXISTS `COMENTARIO` (
 -- Estructura de tabla para la tabla `VISITA`
 --
 
-CREATE TABLE IF NOT EXISTS `VISITA` (
+CREATE TABLE `VISITA` (
   `ID_VISITA` int(9) NOT NULL AUTO_INCREMENT,
   `FECHA_VISITA` date DEFAULT NULL,
-  `LIKE_VISITA` int(10) DEFAULT NULL,
+  `LIKE_VISITA` int(5) DEFAULT '0',
   `ID_CIUDAD` int(9) NOT NULL,
   PRIMARY KEY (`ID_VISITA`),
   KEY `FK_CIUDAD_VISITA` (`ID_CIUDAD`)
@@ -82,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `VISITA` (
 -- Estructura de tabla para la tabla `VISITA-AMIGO`
 --
 
-CREATE TABLE IF NOT EXISTS `VISITA-AMIGO` (
+CREATE TABLE `VISITA-AMIGO` (
   `ID_VISITA-AMIGO` int(9) NOT NULL,
   `ID_VISITA` int(9) NOT NULL,
   `ID_AMIGO` int(9) NOT NULL,
@@ -111,8 +119,8 @@ ALTER TABLE `VISITA`
 -- Filtros para la tabla `VISITA-AMIGO`
 --
 ALTER TABLE `VISITA-AMIGO`
-  ADD CONSTRAINT `visita@002damigo_ibfk_2` FOREIGN KEY (`ID_AMIGO`) REFERENCES `AMIGO` (`ID_AMIGO`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `visita@002damigo_ibfk_1` FOREIGN KEY (`ID_VISITA`) REFERENCES `VISITA` (`ID_VISITA`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `visita@002damigo_ibfk_1` FOREIGN KEY (`ID_VISITA`) REFERENCES `VISITA` (`ID_VISITA`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `visita@002damigo_ibfk_2` FOREIGN KEY (`ID_AMIGO`) REFERENCES `AMIGO` (`ID_AMIGO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
