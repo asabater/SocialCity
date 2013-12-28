@@ -23,7 +23,7 @@
             'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
                 array('label'=>'Nueva Ciudad', 'url'=>array('/site/index')),
-                array('label'=>'Ciudades', 'url'=>array('/site/page', 'view'=>'about')),
+                array('label'=>'Ciudades', 'url'=>array('/ciudad')),
                 array('label'=>'Ciudades visitadas', 'url'=>array('/site/contact')),
             	array('label'=>'Calendario de visitas', 'url'=>array('/site/calendario')),
 				array('label'=>'Amigos', 'url'=>array('/site/amigos')),
