@@ -1,6 +1,6 @@
 <?php
 
-class CiudadController extends Controller
+class VisitaController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,7 +15,6 @@ class CiudadController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -62,16 +61,16 @@ class CiudadController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Ciudad;
+		$model=new Visita;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Ciudad']))
+		if(isset($_POST['Visita']))
 		{
-			$model->attributes=$_POST['Ciudad'];
+			$model->attributes=$_POST['Visita'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->ID_CIUDAD));
+				$this->redirect(array('view','id'=>$model->ID_VISITA));
 		}
 
 		$this->render('create',array(
@@ -91,11 +90,11 @@ class CiudadController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Ciudad']))
+		if(isset($_POST['Visita']))
 		{
-			$model->attributes=$_POST['Ciudad'];
+			$model->attributes=$_POST['Visita'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->ID_CIUDAD));
+				$this->redirect(array('view','id'=>$model->ID_VISITA));
 		}
 
 		$this->render('update',array(
@@ -110,11 +109,17 @@ class CiudadController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
 	/**
@@ -122,7 +127,7 @@ class CiudadController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Ciudad');
+		$dataProvider=new CActiveDataProvider('Visita');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -133,10 +138,10 @@ class CiudadController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Ciudad('search');
+		$model=new Visita('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Ciudad']))
-			$model->attributes=$_GET['Ciudad'];
+		if(isset($_GET['Visita']))
+			$model->attributes=$_GET['Visita'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -146,13 +151,11 @@ class CiudadController extends Controller
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Ciudad the loaded model
-	 * @throws CHttpException
+	 * @param integer the ID of the model to be loaded
 	 */
 	public function loadModel($id)
 	{
-		$model=Ciudad::model()->findByPk($id);
+		$model=Visita::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -160,15 +163,14 @@ class CiudadController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Ciudad $model the model to be validated
+	 * @param CModel the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='ciudad-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='visita-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
-	
 }

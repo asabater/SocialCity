@@ -138,7 +138,38 @@ class SiteController extends Controller
 		}
 	}
 	
+	
 	public function actionAmigos(){
 		$this->render('amigos');
 	}
+	
+	public function actionAutocompletaCiudades () {
+		if (isset($_GET['term'])) {
+			$criteria=new CDbCriteria;
+			$criteria->alias = "ciudades";
+			//$criteria->condition = "NOM_CIUDAD like '" . $_GET['term'] . "%'";
+	
+			$dataProvider = new CActiveDataProvider(get_class(Ciudad::model()), array(
+					'criteria'=>$criteria,'pagination'=>false,
+			));
+			$ciudades = $dataProvider->getData();
+	
+			$return_array = array();
+			foreach($ciudades as $ciudad) {
+				$return_array[] = array(
+						'label'=>$ciudad["NOM_CIUDAD"],
+						'value'=>$ciudad["NOM_CIUDAD"],
+						'id'=>$ciudad["ID_CIUDAD"],
+				);
+			}
+			echo CJSON::encode($return_array);
+			Yii::app()->end();
+		}
+	}
+	
+	public function actionCiudades(){
+		$this->render('ciudades');
+	}
+	
+	
 }
