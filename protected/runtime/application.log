@@ -4685,3 +4685,123 @@ Stack trace:
 REQUEST_URI=/index.php?r=gii/bootstrap/index
 HTTP_REFERER=http://localhost/index.php?r=gii/bootstrap/index
 ---
+2014/01/11 13:28:01 [error] [exception.CException] exception 'CException' with message 'CAssetManager.basePath "/Applications/MAMP/htdocs/SocialCity/assets" is invalid. Please make sure the directory exists and is writable by the Web server process.' in /Applications/MAMP/htdocs/SocialCity/framework/web/CAssetManager.php:138
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CAssetManager.php(123): CAssetManager->setBasePath('/Applications/M...')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CAssetManager.php(217): CAssetManager->getBasePath()
+#2 /Applications/MAMP/htdocs/SocialCity/protected/extensions/bootstrap/components/Bootstrap.php(306): CAssetManager->publish('/Applications/M...', true, -1, false)
+#3 /Applications/MAMP/htdocs/SocialCity/protected/extensions/bootstrap/components/Bootstrap.php(50): Bootstrap->getAssetsUrl()
+#4 /Applications/MAMP/htdocs/SocialCity/protected/extensions/bootstrap/components/Bootstrap.php(81): Bootstrap->registerCoreCss()
+#5 /Applications/MAMP/htdocs/SocialCity/protected/extensions/bootstrap/components/Bootstrap.php(115): Bootstrap->registerAllCss()
+#6 /Applications/MAMP/htdocs/SocialCity/themes/bootstrap/views/layouts/main.php(15): Bootstrap->register()
+#7 /Applications/MAMP/htdocs/SocialCity/framework/web/CBaseController.php(126): require('/Applications/M...')
+#8 /Applications/MAMP/htdocs/SocialCity/framework/web/CBaseController.php(95): CBaseController->renderInternal('/Applications/M...', Array, true)
+#9 /Applications/MAMP/htdocs/SocialCity/framework/web/widgets/CContentDecorator.php(76): CBaseController->renderFile('/Applications/M...', Array, true)
+#10 /Applications/MAMP/htdocs/SocialCity/framework/web/widgets/CContentDecorator.php(54): CContentDecorator->decorate('<div id="conten...')
+#11 /Applications/MAMP/htdocs/SocialCity/framework/web/widgets/COutputProcessor.php(44): CContentDecorator->processOutput('<div id="conten...')
+#12 /Applications/MAMP/htdocs/SocialCity/framework/web/CBaseController.php(206): COutputProcessor->run()
+#13 /Applications/MAMP/htdocs/SocialCity/framework/web/CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#14 /Applications/MAMP/htdocs/SocialCity/protected/views/layouts/column1.php(6): CBaseController->endContent()
+#15 /Applications/MAMP/htdocs/SocialCity/framework/web/CBaseController.php(126): require('/Applications/M...')
+#16 /Applications/MAMP/htdocs/SocialCity/framework/web/CBaseController.php(95): CBaseController->renderInternal('/Applications/M...', Array, true)
+#17 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(784): CBaseController->renderFile('/Applications/M...', Array, true)
+#18 /Applications/MAMP/htdocs/SocialCity/protected/controllers/SiteController.php(32): CController->render('index')
+#19 /Applications/MAMP/htdocs/SocialCity/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#20 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#21 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(286): CController->runAction(Object(CInlineAction))
+#22 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('')
+#24 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#25 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#26 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#27 {main}
+REQUEST_URI=/
+---
+2014/01/11 13:33:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "visita".' in /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(270): CController->missingAction('visita')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('visita')
+#2 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('ciudad/visita')
+#3 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=ciudad/visita
+HTTP_REFERER=http://localhost/index.php?r=ciudad
+---
+2014/01/11 13:33:14 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "visita".' in /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(270): CController->missingAction('visita')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('visita')
+#2 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('site/visita')
+#3 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=site/visita
+HTTP_REFERER=http://localhost/index.php?r=site/amigos
+---
+2014/01/11 13:33:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "visita".' in /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(270): CController->missingAction('visita')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('visita')
+#2 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('site/visita')
+#3 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=site/visita
+HTTP_REFERER=http://localhost/index.php?r=site/visita
+---
+2014/01/11 13:33:23 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "visita".' in /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(270): CController->missingAction('visita')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('visita')
+#2 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('site/visita')
+#3 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=site/visita
+HTTP_REFERER=http://localhost/index.php?r=site/visita
+---
+2014/01/11 13:33:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "visita".' in /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(270): CController->missingAction('visita')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('visita')
+#2 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('site/visita')
+#3 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=site/visita
+HTTP_REFERER=http://localhost/index.php?r=site/calendario
+---
+2014/01/11 18:55:34 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "visita".' in /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(270): CController->missingAction('visita')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('visita')
+#2 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('site/visita')
+#3 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=site/visita
+HTTP_REFERER=http://localhost/index.php?r=site/calendario
+---
+2014/01/12 09:23:45 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "visita".' in /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(270): CController->missingAction('visita')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('visita')
+#2 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('site/visita')
+#3 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=site/visita
+HTTP_REFERER=http://localhost/index.php?r=site/calendario
+---
+2014/01/12 09:23:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "visita".' in /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php:483
+Stack trace:
+#0 /Applications/MAMP/htdocs/SocialCity/framework/web/CController.php(270): CController->missingAction('visita')
+#1 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(282): CController->run('visita')
+#2 /Applications/MAMP/htdocs/SocialCity/framework/web/CWebApplication.php(141): CWebApplication->runController('ciudad/visita')
+#3 /Applications/MAMP/htdocs/SocialCity/framework/base/CApplication.php(180): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/SocialCity/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/index.php?r=ciudad/visita
+HTTP_REFERER=http://localhost/index.php?r=ciudad
+---
