@@ -15,7 +15,6 @@ $this->menu=array(
 
 <h1>Create Ciudad</h1>
 
-<<<<<<< HEAD
 
  <input type="text" id="city" />
 
