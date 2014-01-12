@@ -42,6 +42,7 @@ $this->menu=array(
         });
     }
 });
+
 //alert($(#city).val());
   </script>
 
