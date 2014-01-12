@@ -63,7 +63,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=SocialCityDB',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => '1234',
+            'password' => 'root',
             'charset' => 'utf8',
         ),
 		
