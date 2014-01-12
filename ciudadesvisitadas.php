@@ -1,9 +1,4 @@
 <?php
-Yii::app()->clientScript->registerCoreScript('jquery');
-$this->pageTitle=Yii::app()->name . ' - Cuidades Visitadas';
-$this->breadcrumbs=array(
-	'Ciudades Visitadas',
-);
 
 // Acceso a base de datos
 $database="socialcitydb";
