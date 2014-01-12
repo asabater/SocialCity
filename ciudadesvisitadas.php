@@ -40,7 +40,7 @@ if(isset($_POST['like'])){
 	@mysql_select_db($database) or die( "Error de conexion");
 	// Actualizar un registro en la base de datos
 	$like_visita=$like_visita+1;
-	$sentencia="UPDATE `socialcity`.`visita` SET `LIKE_VISITA` = $like_visita WHERE `visita`.`ID_VISITA` = 1";
+	$sentencia="UPDATE `socialcitydb`.`visita` SET `LIKE_VISITA` = $like_visita WHERE `visita`.`ID_VISITA` = 1";
 	$result=mysql_query($sentencia);
 	mysql_close();
 }
