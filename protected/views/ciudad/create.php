@@ -15,6 +15,7 @@ $this->menu=array(
 
 <h1>Create Ciudad</h1>
 
+<<<<<<< HEAD
 
  <input type="text" id="city" />
 
@@ -45,6 +46,5 @@ $this->menu=array(
 
 //alert($(#city).val());
   </script>
-
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
