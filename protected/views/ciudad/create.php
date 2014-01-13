@@ -13,17 +13,22 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create Ciudad</h1>
+<h1>Nueva Ciudad</h1>
 
-
- <input type="text" id="city" />
-
-
+ 
+ 
+ <form action="?r=ciudad/create?" method="get" enctype="application/x-www-form-urlencoded" name="wiki" target="_top">
+  <input type="text" id="city" class="span9"/>
+ <textarea id="comentario" clas="span9" > </textarea>
+  <input id="wiki" name="wiki" type="submit" />
+</form>
+ 
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <link rel="stylesheet" href="/resources/demos/style.css">
-  <script>
+  
+  <script type="text/javascript">
   $("#city").autocomplete({
     source: function(request, response) {
         console.log(request.term);
@@ -37,7 +42,7 @@ $this->menu=array(
                 'limit': 4
             },
             success: function(data) {
-                response(data[1]);
+                response(data[1]);     
             }
         });
     }
