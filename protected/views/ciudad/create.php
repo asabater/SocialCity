@@ -40,6 +40,7 @@ $this->menu=array(
                 'format': "json",
                 'search': request.term,
                 'limit': 4
+                
             },
             success: function(data) {
                 response(data[1]);     
