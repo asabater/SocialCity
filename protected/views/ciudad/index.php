@@ -27,7 +27,7 @@ $this->menu=array(
     		ciudades = [];
    			map = {};
      	 	$.ajax({
-       	 		url: "'.$this->createUrl('autocompletaCiudades').'",
+       	 		url: "'.$this->createUrl('site/autocompletaCiudades').'",
        			type: "GET",
        	 		dataType:"json",
        			data: {term: query},

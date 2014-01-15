@@ -28,7 +28,7 @@ class CiudadController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'autocompletaCiudades'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -171,31 +171,4 @@ class CiudadController extends Controller
 		}
 	}
 	
-	public function actionAutocompletaCiudades () {
-		if (isset($_GET['term'])) {
-			$criteria=new CDbCriteria;
-			$criteria->alias = "ciudades";
-			$criteria->condition = "NOM_CIUDAD like '" . $_GET['term'] . "%'";
-	
-			$dataProvider = new CActiveDataProvider(get_class(Ciudad::model()), array(
-					'criteria'=>$criteria,'pagination'=>false,
-			));
-			$ciudades = $dataProvider->getData();
-	
-			$return_array = array();
-			foreach($ciudades as $ciudad) {
-				$return_array[] = array(
-						'label'=>$ciudad["NOM_CIUDAD"],
-						'value'=>$ciudad["NOM_CIUDAD"],
-						'id'=>$ciudad["ID_CIUDAD"],
-				);
-			}
-			echo CJSON::encode($return_array);
-			Yii::app()->end();
-		}
-	}
-	
-	public function actionCiudades(){
-		$this->render('ciudades');
-	}
 }
