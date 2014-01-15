@@ -12,7 +12,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Ciudades</h1>
 
 <?php $this->widget('bootstrap.widgets.TbTypeahead', array(
     // 'model'=>$model,
@@ -25,7 +24,7 @@ $this->menu=array(
 	),
        'options'=>array(
 		'source'=>'js:function(query,process){
-    		amigos = [];
+    		ciudades = [];
    			map = {};
      	 	$.ajax({
        	 		url: "'.$this->createUrl('autocompletaCiudades').'",
@@ -33,7 +32,9 @@ $this->menu=array(
        	 		dataType:"json",
        			data: {term: query},
        			success: function(data){
+       				// alert("asdw");
     				$.each(data, function (i, ciudad) {
+    					//alert(ciudad.id);
 	        			map[ciudad.label] = ciudad;
 	       				ciudades.push(ciudad.label);
    					 });
@@ -43,8 +44,17 @@ $this->menu=array(
     	}',
     	'updater'=>'js:function (item) {
     		ciudadSeleccionado = map[item].id;
+			eval($("#CityTitle").html("<h2>"+map[item].label+"</h2>"));
+			alert(map[item].label);  
     		return item;
     	}',
     	'items'=>4,
   ),
 )); ?>
+
+
+<div id='CityInfo'>
+	<div id='CityTitle'></div><div id="NumberLikes">NumberLikes</div>
+	<hr>
+	<div id="CityDescription"></div>
+</div>
