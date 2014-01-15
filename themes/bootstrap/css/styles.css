@@ -1,3 +1,18 @@
 #page {
-    padding-top: 60px;
+	padding-top: 60px;
+}
+#CityInfo > div {
+	display: inline-block;
+}
+
+#CityTitle {
+	margin-right: 10px;
+}
+
+#NumberLikes {
+	background: url("/images/like2.PNG") no-repeat scroll right top rgba(0, 0, 0, 0);
+	height: 35px;
+	position: relative;
+	top: 0;
+	width: 100px;
 }

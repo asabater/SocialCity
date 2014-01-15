@@ -159,6 +159,7 @@ class SiteController extends Controller
 				$return_array[] = array(
 						'label'=>$ciudad["NOM_CIUDAD"],
 						'value'=>$ciudad["NOM_CIUDAD"],
+						'likes'=>$ciudad["LIKE_CIUDAD"],
 						'id'=>$ciudad["ID_CIUDAD"],
 				);
 			}
