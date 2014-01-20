@@ -74,7 +74,7 @@ $this -> menu = array( array('label' => 'Create Ciudad', 'url' => array('create'
 			
 			$("#CityTitle").html("<h2>"+map[item].label+"</h2>");
 			$("#Counter").html(map[item].likes);
-			
+			$("#CityOpinion").html(map[item].comm);
 			getDesc(map[item].label); 
 			
     		return item;
