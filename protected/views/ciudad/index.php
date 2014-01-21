@@ -108,9 +108,9 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 		'ID_AMIGO',
 		'ID_VISITA',
 		'COM_LIKEs',
-		array(
-			'class'=>'bootstrap.widgets.TbButtonColumn',
-		),
+		// array(
+			// 'class'=>'bootstrap.widgets.TbButtonColumn',
+		// ),
 	),
 ));
  ?>

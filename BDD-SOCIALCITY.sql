@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-01-2014 a las 03:19:05
+-- Tiempo de generación: 21-01-2014 a las 21:52:27
 -- Versión del servidor: 5.5.25
 -- Versión de PHP: 5.3.14
 
@@ -54,7 +54,8 @@ CREATE TABLE `ciudad` (
   `COMM_CIUDAD` varchar(300) CHARACTER SET utf8 NOT NULL,
   `PAGE_ID_CIUDAD` varchar(10) CHARACTER SET utf8 NOT NULL,
   `LIKE_CIUDAD` int(10) NOT NULL,
-  PRIMARY KEY (`ID_CIUDAD`)
+  PRIMARY KEY (`ID_CIUDAD`),
+  UNIQUE KEY `NOM_CIUDAD` (`NOM_CIUDAD`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
 
 --
@@ -89,7 +90,7 @@ CREATE TABLE `comentario` (
 --
 
 INSERT INTO `comentario` (`ID_COMENTARIO`, `COM_TEXT`, `ID_AMIGO`, `ID_VISITA`, `FECHA_COMENTARIO`, `COM_LIKEs`) VALUES
-(1, 'Vaya rollo de ciudad', 2, 1, NULL, 0),
+(1, 'Vaya rollo de ciudad', 2, 1, '2014-01-21', 0),
 (2, 'No saben tirar cañas en esta ciudad', 1, 1, NULL, 0);
 
 -- --------------------------------------------------------
