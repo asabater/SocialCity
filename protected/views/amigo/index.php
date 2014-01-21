@@ -115,24 +115,20 @@ $('.form-actions form').submit(function(){
 		'value'=>'CHtml::encode($data["LIKE_VISITA"])',
 		),
 		array(
-		'type'=>'raw',
-		//'value'=>'CHtml::link(CHtml::image(Yii::app()->baseUrl."/images/like2.png"), array ("visita/Megusta", "id"=>$data["ID_VISITA"]))',
-		'value'=>'CHtml::ajaxLink(CHtml::image(Yii::app()->baseUrl."/images/like2.png"),
-								  Yii::app()->createUrl("visita/megusta"),
-								  array( 
-									  "type" => "GET",
-									  "data"=>array("id"=>$data["ID_VISITA"]),
-									  "success"=>"function()
-										{
-											$(\"#amigo-grid\").yiiGridView(\"update\", {
-												data: $(this).serialize()
-											});
-											return false;
-										}",
-									),
-								  array("id" => "megusta".$data["ID_VISITA"])
-								)',
-		)
+		'class'=>'CButtonColumn',
+		'template' => '{megusta}',
+		'buttons'=>array
+		(
+				'megusta' => array
+				(
+						'label' => 'Me gusta',
+						'imageUrl' => Yii::app()->baseUrl.'/images/like2.png',
+						'ajax' => true,
+						'url' => 'Yii::app()->createUrl("visita/megusta", array("id"=>$data["ID_VISITA"]))',
+						'options' => array( 'ajax' => array('type' => 'GET', 'url'=>'js:$(this).attr("href")', 'success' => 'js:function(data) { $.fn.yiiGridView.update("#amigo-grid")}') ),
+				),
+		),
+		),
 	),
 	'emptyText' => 'El amigo buscado no ha realizado visitas',
 )); ?>
