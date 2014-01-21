@@ -7,6 +7,7 @@ class AmigoController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
+	public $amigobuscado;
 
 	/**
 	 * @return array action filters
@@ -28,11 +29,11 @@ class AmigoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','autocompletaAmigos','visitasRealizadas','create'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -43,6 +44,48 @@ class AmigoController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+	
+	/**
+	 * Autocompleta el buscador de amigos
+	 * 
+	 */
+	public function actionAutocompletaAmigos () {
+		if (isset($_GET['term'])) {
+			$criteria=new CDbCriteria;
+			$criteria->alias = "amigos";
+			//$criteria->condition = "NOM_AMIGO like '" . $_GET['term'] . "%'";
+	
+			$dataProvider = new CActiveDataProvider(get_class(Amigo::model()), array(
+					'criteria'=>$criteria,'pagination'=>false,
+			));
+			$amigos = $dataProvider->getData();
+	
+			$return_array = array();
+			foreach($amigos as $amigo) {
+				$return_array[] = array(
+						'label'=>$amigo["NOM_AMIGO"],
+						'value'=>$amigo["NOM_AMIGO"],
+						'id'=>$amigo["ID_AMIGO"],
+				);
+			}
+			echo CJSON::encode($return_array);
+			Yii::app()->end();
+		}
+	}
+	
+	public function actionVisitasRealizadas() {
+		if (Yii::app()->request->isAjaxRequest) {
+			
+			$model = new VisitaAmigo();
+			$model->unsetAttributes();
+			$model->amigobuscado=$_POST['amigobuscado'];
+							
+			$dataProvider = $model->buscaVisitasAmigo();
+		
+			echo $model->amigobuscado;
+			$this->renderPartial('index', array('model' => $model, 'dataProvider'=>$dataProvider));
+		}
 	}
 
 	/**
@@ -122,9 +165,16 @@ class AmigoController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Amigo');
+		$model=new Amigo();
+		$model2 = new visitaAmigo('buscaVisitasAmigo');
+		$model2->unsetAttributes();  // clear any default values
+		if(isset($_GET['VisitaAmigo'])){
+			$model2->attributes=$_GET['VisitaAmigo'];
+		}
+		else{$model2->ID_AMIGO=0;}
+			
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'model'=>$model,'model2'=>$model2
 		));
 	}
 
