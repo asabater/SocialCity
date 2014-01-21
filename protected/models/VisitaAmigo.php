@@ -14,6 +14,15 @@
  */
 class VisitaAmigo extends CActiveRecord
 {
+	public $NOM_AMIGO;
+	public $FECHA_VISITA;
+	public $ID_CIUDAD;
+	public $ACOMPANYANTES;
+	public $LIKE_VISITA;
+	public $FECHA;
+	public $GUSTA;
+	public $amigobuscado;
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -34,7 +43,8 @@ class VisitaAmigo extends CActiveRecord
 			array('ID_VISITA_AMIGO, ID_VISITA, ID_AMIGO', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ID_VISITA_AMIGO, ID_VISITA, ID_AMIGO', 'safe', 'on'=>'search'),
+			array('ID_VISITA_AMIGO, ID_VISITA, ID_AMIGO, NOM_AMIGO, FECHA_VISITA, ID_CIUDAD', 'safe', 'on'=>'search'),
+			array('amigobuscado', 'safe', 'on'=>'buscaVisitasAmigo'),
 		);
 	}
 
@@ -46,8 +56,8 @@ class VisitaAmigo extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'iDVISITA' => array(self::BELONGS_TO, 'Visita', 'ID_VISITA'),
-			'iDAMIGO' => array(self::BELONGS_TO, 'Amigo', 'ID_AMIGO'),
+			'FK_Visita_Visitas' => array(self::BELONGS_TO, 'Visita', 'ID_VISITA'),
+			'FK_Amigos_Visitas' => array(self::BELONGS_TO, 'Amigo', 'ID_AMIGO'),
 		);
 	}
 
@@ -84,9 +94,40 @@ class VisitaAmigo extends CActiveRecord
 		$criteria->compare('ID_VISITA_AMIGO',$this->ID_VISITA_AMIGO);
 		$criteria->compare('ID_VISITA',$this->ID_VISITA);
 		$criteria->compare('ID_AMIGO',$this->ID_AMIGO);
-
+		
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+				'criteria'=>$criteria,
+		));
+	}
+	
+	public function buscaVisitasAmigo()
+	{
+		$criteria = new CDbCriteria;
+		
+		//$criteria->compare('ID_AMIGO',$this->ID_AMIGO);
+
+		//$where=$criteria->condition;
+		//$params=$criteria->params;
+		$where=$criteria->condition='ID_AMIGO = :amigoId';
+		if (isset($this->ID_AMIGO)){
+		$params=$criteria->params=array(':amigoId'=>$this->ID_AMIGO);}
+		else{$params=$criteria->params=array(':amigoId'=>0);}
+		
+		$subSQL=Yii::app()->db->createCommand()
+			->select('ID_VISITA')
+			->from ('visita_amigo')
+			->where ($where,$params)
+			->text;
+			
+		$key="ID_VISITA";
+		$sql="SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_VISITA IN ($subSQL) GROUP BY ID_VISITA";
+			
+		return $dataProvider=new CSqlDataProvider($sql, array(
+				'params'=>$params,
+				'keyField'=>$key,
+				'pagination'=>array(
+						'pageSize'=>10,
+				),
 		));
 	}
 
