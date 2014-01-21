@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 15-12-2013 a las 17:23:56
--- Versión del servidor: 5.5.32
--- Versión de PHP: 5.4.19
+-- Servidor: localhost
+-- Tiempo de generación: 21-01-2014 a las 03:19:05
+-- Versión del servidor: 5.5.25
+-- Versión de PHP: 5.3.14
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `SocialCityDB`
 --
-CREATE DATABASE IF NOT EXISTS `SocialCityDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `SocialCityDB`;
 
 -- --------------------------------------------------------
 
@@ -28,12 +26,20 @@ USE `SocialCityDB`;
 -- Estructura de tabla para la tabla `amigo`
 --
 
-CREATE TABLE IF NOT EXISTS `amigo` (
+CREATE TABLE `amigo` (
   `ID_AMIGO` int(9) NOT NULL AUTO_INCREMENT,
   `NOM_AMIGO` varchar(50) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`ID_AMIGO`),
   UNIQUE KEY `NOM_AMIGO` (`NOM_AMIGO`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `amigo`
+--
+
+INSERT INTO `amigo` (`ID_AMIGO`, `NOM_AMIGO`) VALUES
+(2, 'Juan'),
+(1, 'Pedro');
 
 -- --------------------------------------------------------
 
@@ -41,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `amigo` (
 -- Estructura de tabla para la tabla `ciudad`
 --
 
-CREATE TABLE IF NOT EXISTS `ciudad` (
+CREATE TABLE `ciudad` (
   `ID_CIUDAD` int(9) NOT NULL AUTO_INCREMENT,
   `NOM_CIUDAD` varchar(50) CHARACTER SET utf8 NOT NULL,
   `LINK_CIUDAD` varchar(200) CHARACTER SET utf8 NOT NULL,
@@ -49,14 +55,16 @@ CREATE TABLE IF NOT EXISTS `ciudad` (
   `PAGE_ID_CIUDAD` varchar(10) CHARACTER SET utf8 NOT NULL,
   `LIKE_CIUDAD` int(10) NOT NULL,
   PRIMARY KEY (`ID_CIUDAD`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `ciudad`
 --
 
 INSERT INTO `ciudad` (`ID_CIUDAD`, `NOM_CIUDAD`, `LINK_CIUDAD`, `COMM_CIUDAD`, `PAGE_ID_CIUDAD`, `LIKE_CIUDAD`) VALUES
-(1, 'Madrid', '', '', '', 0);
+(1, 'Madrid', 'http://es.wikipedia.org/wiki/Madrid', 'Vaya mierda ciudad', '', -1),
+(2, 'Barcelona', 'http', 'Es bona si la bossa sona', '1234', 10),
+(3, 'Maracaibo', 'http://es.wikipedia.org/wiki/Maracaibo', 'Maracaibo es una ciudad que goza de un clima ideal, altas temperaturas todo el año. Las marabinas son muy simpáticas y  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tristique sapien dolor, sed consequat ante convallis sagittis. Phasellus convallis elit eu porta tincidunt. Curab', 'PageId', 99);
 
 -- --------------------------------------------------------
 
@@ -64,16 +72,25 @@ INSERT INTO `ciudad` (`ID_CIUDAD`, `NOM_CIUDAD`, `LINK_CIUDAD`, `COMM_CIUDAD`, `
 -- Estructura de tabla para la tabla `comentario`
 --
 
-CREATE TABLE IF NOT EXISTS `comentario` (
+CREATE TABLE `comentario` (
   `ID_COMENTARIO` int(9) NOT NULL AUTO_INCREMENT,
   `COM_TEXT` varchar(250) CHARACTER SET utf8 NOT NULL,
   `ID_AMIGO` int(9) NOT NULL,
   `ID_VISITA` int(9) NOT NULL,
+  `FECHA_COMENTARIO` date DEFAULT NULL,
   `COM_LIKEs` int(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID_COMENTARIO`),
   KEY `ID_AMIGO` (`ID_AMIGO`),
   KEY `ID_VISITA` (`ID_VISITA`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `comentario`
+--
+
+INSERT INTO `comentario` (`ID_COMENTARIO`, `COM_TEXT`, `ID_AMIGO`, `ID_VISITA`, `FECHA_COMENTARIO`, `COM_LIKEs`) VALUES
+(1, 'Vaya rollo de ciudad', 2, 1, NULL, 0),
+(2, 'No saben tirar cañas en esta ciudad', 1, 1, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -81,15 +98,22 @@ CREATE TABLE IF NOT EXISTS `comentario` (
 -- Estructura de tabla para la tabla `visita`
 --
 
-CREATE TABLE IF NOT EXISTS `visita` (
+CREATE TABLE `visita` (
   `ID_VISITA` int(9) NOT NULL AUTO_INCREMENT,
   `FECHA_VISITA` date DEFAULT NULL,
   `LIKE_VISITA` int(5) DEFAULT '0',
   `ID_CIUDAD` int(9) NOT NULL,
   PRIMARY KEY (`ID_VISITA`),
   KEY `FK_CIUDAD_VISITA` (`ID_CIUDAD`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
+--
+-- Volcado de datos para la tabla `visita`
+--
+
+INSERT INTO `visita` (`ID_VISITA`, `FECHA_VISITA`, `LIKE_VISITA`, `ID_CIUDAD`) VALUES
+(1, '2014-01-12', 1, 1),
+(2, '2014-01-05', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -97,14 +121,24 @@ CREATE TABLE IF NOT EXISTS `visita` (
 -- Estructura de tabla para la tabla `visita_amigo`
 --
 
-CREATE TABLE IF NOT EXISTS `visita_amigo` (
-  `ID_VISITA_AMIGO` int(9) NOT NULL,
+CREATE TABLE `visita_amigo` (
+  `ID_VISITA_AMIGO` int(9) NOT NULL AUTO_INCREMENT,
   `ID_VISITA` int(9) NOT NULL,
   `ID_AMIGO` int(9) NOT NULL,
   PRIMARY KEY (`ID_VISITA_AMIGO`),
   KEY `ID_VISITA` (`ID_VISITA`),
   KEY `ID_AMIGO` (`ID_AMIGO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `visita_amigo`
+--
+
+INSERT INTO `visita_amigo` (`ID_VISITA_AMIGO`, `ID_VISITA`, `ID_AMIGO`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 2, 2),
+(4, 2, 1);
 
 --
 -- Restricciones para tablas volcadas

@@ -1,17 +1,20 @@
 <?php
+/* @var $this ComentarioController */
+/* @var $dataProvider CActiveDataProvider */
+
 $this->breadcrumbs=array(
 	'Comentarios',
 );
 
 $this->menu=array(
-	array('label'=>'Create Comentario','url'=>array('create')),
-	array('label'=>'Manage Comentario','url'=>array('admin')),
+	array('label'=>'Create Comentario', 'url'=>array('create')),
+	array('label'=>'Manage Comentario', 'url'=>array('admin')),
 );
 ?>
 
 <h1>Comentarios</h1>
 
-<?php $this->widget('bootstrap.widgets.TbListView',array(
+<?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>

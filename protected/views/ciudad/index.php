@@ -4,7 +4,8 @@
 
 $this -> breadcrumbs = array('Ciudades', );
 
-$this -> menu = array( array('label' => 'Create Ciudad', 'url' => array('create')), array('label' => 'Manage Ciudad', 'url' => array('admin')), );
+// $this -> menu = array( array('label' => 'Create Ciudad', 'url' => array('create')), array('label' => 'Manage Ciudad', 'url' => array('admin')), );
+
 ?>
 
 <script>
@@ -51,7 +52,8 @@ $this -> menu = array( array('label' => 'Create Ciudad', 'url' => array('create'
 	// 'model'=>$model,
 	'name' => 'Ciudades', 'id' => 'Ciudades_visitadas',
 	// 'value'=>"Introduce el nombre de la ciudad",
-	'htmlOptions' => array('class' => 'span9', 'placeholder' => 'Introduce el nombre de la ciudad', ), 'options' => array('source' => 'js:function(query,process){
+	'htmlOptions' => array('class' => 'span9', 'placeholder' => 'Introduce el nombre de la ciudad', ), 
+	'options' => array('source' => 'js:function(query,process){
     		ciudades = [];
    			map = {};
      	 	$.ajax({
@@ -90,3 +92,25 @@ $this -> menu = array( array('label' => 'Create Ciudad', 'url' => array('create'
 	<div id="CityDescription"></div>
 	<div id="CityOpinion"></div>
 </div>
+	
+<?php 
+$model=new Comentario;
+
+$this->widget('bootstrap.widgets.TbGridView',array(
+	'id'=>'comentario-grid',
+	'dataProvider'=>$model->search(),
+	// 'filter'=>$model,
+	
+	'columns'=>array(
+		'FECHA_COMENTARIO',
+		'ID_COMENTARIO',
+		'COM_TEXT',
+		'ID_AMIGO',
+		'ID_VISITA',
+		'COM_LIKEs',
+		array(
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+		),
+	),
+));
+ ?>

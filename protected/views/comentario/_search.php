@@ -1,24 +1,50 @@
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
+<?php
+/* @var $this ComentarioController */
+/* @var $model Comentario */
+/* @var $form CActiveForm */
+?>
+
+<div class="wide form">
+
+<?php $form=$this->beginWidget('CActiveForm', array(
 	'action'=>Yii::app()->createUrl($this->route),
 	'method'=>'get',
 )); ?>
 
-	<?php echo $form->textFieldRow($model,'ID_COMENTARIO',array('class'=>'span5')); ?>
+	<div class="row">
+		<?php echo $form->label($model,'ID_COMENTARIO'); ?>
+		<?php echo $form->textField($model,'ID_COMENTARIO'); ?>
+	</div>
 
-	<?php echo $form->textFieldRow($model,'COM_TEXT',array('class'=>'span5','maxlength'=>250)); ?>
+	<div class="row">
+		<?php echo $form->label($model,'COM_TEXT'); ?>
+		<?php echo $form->textField($model,'COM_TEXT',array('size'=>60,'maxlength'=>250)); ?>
+	</div>
 
-	<?php echo $form->textFieldRow($model,'ID_AMIGO',array('class'=>'span5')); ?>
+	<div class="row">
+		<?php echo $form->label($model,'ID_AMIGO'); ?>
+		<?php echo $form->textField($model,'ID_AMIGO'); ?>
+	</div>
 
-	<?php echo $form->textFieldRow($model,'ID_VISITA',array('class'=>'span5')); ?>
+	<div class="row">
+		<?php echo $form->label($model,'ID_VISITA'); ?>
+		<?php echo $form->textField($model,'ID_VISITA'); ?>
+	</div>
 
-	<?php echo $form->textFieldRow($model,'COM_LIKEs',array('class'=>'span5')); ?>
+	<div class="row">
+		<?php echo $form->label($model,'FECHA_COMENTARIO'); ?>
+		<?php echo $form->textField($model,'FECHA_COMENTARIO'); ?>
+	</div>
 
-	<div class="form-actions">
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>'Search',
-		)); ?>
+	<div class="row">
+		<?php echo $form->label($model,'COM_LIKEs'); ?>
+		<?php echo $form->textField($model,'COM_LIKEs'); ?>
+	</div>
+
+	<div class="row buttons">
+		<?php echo CHtml::submitButton('Search'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
+
+</div><!-- search-form -->
