@@ -15,6 +15,7 @@ class VisitaController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
+			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -27,7 +28,7 @@ class VisitaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','megusta','visitaPeriodo'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -77,6 +78,51 @@ class VisitaController extends Controller
 			'model'=>$model,
 		));
 	}
+	
+	public function actionMegusta($id)
+	{
+		$model=new Visita;
+		$vis=$model->findByPk($id);
+	
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		$vis->LIKE_VISITA += 1;
+		$vis->save();
+		//$this->render('view', array('post' => $post));
+		Yii::app()->end();
+	}
+	
+	public function actionVisitaPeriodo()
+	{
+		if (isset($_GET['from'])) {
+			$criteria=new CDbCriteria;
+			$desde = ($_GET['from'])*(1000*60*60*24);
+			$hasta = ($_GET['to'])*(1000*60*60*24);
+			$ini = new DateTime($desde);
+			$ini = $ini->format('Y-m-d');
+			$fin = new DateTime($hasta);
+			$fin = $fin->format('Y-m-d');
+			$criteria->addBetweenCondition('FECHA_VISITA',$ini,$fin);
+			$dataProvider = new CActiveDataProvider(get_class(Visita::model()), array(
+					'criteria'=>$criteria,'pagination'=>false,
+			));
+			$visitas = $dataProvider->getData();
+			$return_array = array();
+			foreach($visitas as $visita) {
+				$return_array[] = array(
+						'id'=>$visita["ID_VISITA"],
+						'title'=>$visita["ID_CIUDAD"],
+						'url'=>"http://example.com",
+						'class'=>"event-important",
+						'start'=>$visita["FECHA_VISITA"],
+						'end'=>$visita["FECHA_VISITA"],
+				);
+			}
+			echo CJSON::encode($return_array);
+		}
+	}
 
 	/**
 	 * Updates a particular model.
@@ -112,12 +158,12 @@ class VisitaController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+		$this->loadModel($id)->delete();
 
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
@@ -151,7 +197,9 @@ class VisitaController extends Controller
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the ID of the model to be loaded
+	 * @param integer $id the ID of the model to be loaded
+	 * @return Visita the loaded model
+	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
@@ -163,7 +211,7 @@ class VisitaController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param CModel the model to be validated
+	 * @param Visita $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
