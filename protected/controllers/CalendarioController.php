@@ -35,7 +35,7 @@ class CalendarioController extends Controller
 					$return_array[] = array(
 							'id'=>$visita["ID_VISITA"],
 							'title'=>$visita->FK_Ciudad_Visita->NOM_CIUDAD,
-							'url'=>"a",
+							'url'=> Yii::app()->createUrl('visita/view', array('id'=>$visita['ID_VISITA'])),
 							'class'=> "event-special",
 							'start'=>strtotime($visita["FECHA_VISITA"]).'000',
 							'end'=>strtotime($visita["FECHA_VISITA"]).'000'
