@@ -8,11 +8,6 @@ $this->breadcrumbs=array(
 	'Amigos',
 );
 
-$this->menu=array(
-	array('label'=>'Create Amigo', 'url'=>array('create')),
-	array('label'=>'Manage Amigo', 'url'=>array('admin')),
-);
-
 Yii::app()->clientScript->registerScript('search', "
 $('.form-actions form').submit(function(){
 	$('.search-form').show('slow');
@@ -119,19 +114,29 @@ $('.form-actions form').submit(function(){
 		'template' => '{megusta}',
 		'buttons'=>array
 		(
-				'megusta' => array
-				(
-						'label' => 'Me gusta',
-						'imageUrl' => Yii::app()->baseUrl.'/images/like2.png',
-						'ajax' => true,
-						'url' => 'Yii::app()->createUrl("visita/megusta", array("id"=>$data["ID_VISITA"]))',
-						'options' => array( 'ajax' => array('type' => 'GET', 'url'=>'js:$(this).attr("href")', 'success' => 'js:function(data) { $.fn.yiiGridView.update("#amigo-grid")}') ),
-				),
+			'megusta' => array
+          	(
+            	'label' => 'Me gusta',
+            	'imageUrl' => Yii::app()->baseUrl.'/images/like2.png',
+				'click'=>"function(){
+    				$.fn.yiiGridView.update('amigo-grid', {
+       					type:'POST',
+        				url:$(this).attr('href'),
+        				success:function(data) {
+              				$.fn.yiiGridView.update('amigo-grid');
+        				}
+    				})
+    				return false;
+ 				 }
+				",
+            	'url' => 'Yii::app()->createUrl("visita/megusta", array("id"=>$data["ID_VISITA"]))',
+          	),
 		),
 		),
 	),
 	'emptyText' => 'El amigo buscado no ha realizado visitas',
-)); ?>
+));
+ ?>
 </div>	
 
 
@@ -141,8 +146,14 @@ $('.form-actions form').submit(function(){
 	$addform=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'agregaAmigo',
     'type'=>'inline',
-    'htmlOptions'=>array('class'=>'well'),
+	'enableClientValidation'=>true,
+    'clientOptions'=>array(
+		'validateOnSubmit'=>true,
+	),
+	'htmlOptions'=>array('class'=>'well'),
 )); ?>
+		<div class="errorMessage" id="formResult"></div>
+        <div class="row-user-single">
 		<?php echo $addform->errorSummary($model); ?>
 		<?php echo $addform->textField($model,'NOM_AMIGO',array('class'=>'input-xxlarge','size'=>50,'maxlength'=>50)); ?>
 		<?php echo $addform->error($model,'NOM_AMIGO'); ?>
@@ -159,5 +170,6 @@ $('.form-actions form').submit(function(){
                     			'error'=>'function(data) {
            							alert("Ha habido un error en el alta del amigo, por favor inténtelo de nuevo");
         						}',
-						)));?>
+						)));
+		?>
 <?php $this->endWidget(); ?>
