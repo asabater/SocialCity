@@ -7,10 +7,12 @@
  * @property integer $ID_COMENTARIO
  * @property string $COM_TEXT
  * @property integer $ID_AMIGO
+ * @property integer $ID_VISITA
  * @property integer $COM_LIKEs
  *
  * The followings are the available model relations:
- * @property Amigo $iDCOMENTARIO
+ * @property Amigo $iDAMIGO
+ * @property Visita $iDVISITA
  */
 class Comentario extends CActiveRecord
 {
@@ -30,12 +32,12 @@ class Comentario extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('COM_TEXT, ID_AMIGO', 'required'),
-			array('ID_AMIGO, COM_LIKEs', 'numerical', 'integerOnly'=>true),
+			array('COM_TEXT, ID_AMIGO, ID_VISITA', 'required'),
+			array('ID_AMIGO, ID_VISITA, COM_LIKEs', 'numerical', 'integerOnly'=>true),
 			array('COM_TEXT', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ID_COMENTARIO, COM_TEXT, ID_AMIGO, COM_LIKEs', 'safe', 'on'=>'search'),
+			array('ID_COMENTARIO, COM_TEXT, ID_AMIGO, ID_VISITA, COM_LIKEs', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,7 +49,8 @@ class Comentario extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'iDCOMENTARIO' => array(self::BELONGS_TO, 'Amigo', 'ID_COMENTARIO'),
+			'FK_COMENTARIO_AMIGO' => array(self::BELONGS_TO, 'Amigo', 'ID_AMIGO'),
+			'FK_COMENTARIO_VISITA' => array(self::BELONGS_TO, 'Visita', 'ID_VISITA'),
 		);
 	}
 
@@ -60,6 +63,7 @@ class Comentario extends CActiveRecord
 			'ID_COMENTARIO' => 'Id Comentario',
 			'COM_TEXT' => 'Com Text',
 			'ID_AMIGO' => 'Id Amigo',
+			'ID_VISITA' => 'Id Visita',
 			'COM_LIKEs' => 'Com Likes',
 		);
 	}
@@ -85,6 +89,7 @@ class Comentario extends CActiveRecord
 		$criteria->compare('ID_COMENTARIO',$this->ID_COMENTARIO);
 		$criteria->compare('COM_TEXT',$this->COM_TEXT,true);
 		$criteria->compare('ID_AMIGO',$this->ID_AMIGO);
+		$criteria->compare('ID_VISITA',$this->ID_VISITA);
 		$criteria->compare('COM_LIKEs',$this->COM_LIKEs);
 
 		return new CActiveDataProvider($this, array(
