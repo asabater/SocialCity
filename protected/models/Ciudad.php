@@ -90,7 +90,7 @@ class Ciudad extends CActiveRecord {
 	public function buscaComentariosCiudad() {
 		// session_start(); 
 		// $id_ciudad = $_SESSION['id'];
-		var_dump($_SESSION);
+		// var_dump($_SESSION);
 		
 		$criteria = new CDbCriteria;
 
