@@ -31,3 +31,7 @@
 #CityOpinion {
 	border: 1px solid black;
 }
+
+#comDiv {
+	display: none;
+}
