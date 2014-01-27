@@ -43,7 +43,7 @@ $model2=new Ciudad();
 		// })
 		// },
 		error : function() {
-			alert('Failed!');
+			// alert('Failed!');
 		}
 		// beforeSend : setHeader
 		});
@@ -67,7 +67,7 @@ $model2=new Ciudad();
 		// })
 		// },
 		error : function() {
-			alert('Failed!');
+			// alert('Failed!');
 		}
 		// beforeSend : setHeader
 		});
