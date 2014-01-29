@@ -17,7 +17,7 @@ $this->menu=array(
 
  
  
- <form action="?r=ciudad/create?" method="get" enctype="application/x-www-form-urlencoded" name="wiki" target="_top">
+ <form action="?r=ciudad/create?" method="post" enctype="application/x-www-form-urlencoded" name="wiki" target="_top">
   <input type="text" id="city" class="span9"/>
  <textarea id="comentario" clas="span9" > </textarea>
   <input id="wiki" name="wiki" type="submit" />
