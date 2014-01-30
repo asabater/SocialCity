@@ -15,18 +15,19 @@ $('#form').submit(function(){
 	$('#amigo-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
+	$('#VisitaAmigo_ID_AMIGO').val('');
 	return false;
 });
 ");
 
 ?>
 
-<h1>Buscador de amigos</h1>
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'form',
 	'htmlOptions'=>array('class'=>'well'),
 )); ?>
+	<legend>Buscador de amigos</legend>
 	<fieldset>
 		<div class="input-append">
 				<?php 
@@ -65,7 +66,7 @@ $('#form').submit(function(){
     					$(\'#VisitaAmigo_ID_AMIGO\').val(amigoSeleccionado);
     					return item;
     				}',
-    				'items'=>4,
+    				'items'=>10,
   					),
 				));
 			?>
@@ -73,7 +74,7 @@ $('#form').submit(function(){
     			'buttonType'=>'submit',
    				'type'=>'primary',
     			'label'=>'Buscar',
-				'icon'=>'search',
+				'icon'=>'icon-search',
     			'htmlOptions'=>array('class'=>'search-button'),
 				));
 			?>
@@ -103,7 +104,7 @@ $('#form').submit(function(){
 		array(
 		'name'=>'Comentarios',
 		'type'=>'raw',
-		'value'=>'substr($data["COM_TEXT"],0,30)."... ".CHtml::link("Leer más", array ("visita/view", "id"=>$data["ID_VISITA"]))',
+		'value'=>'$data["COM_TEXT"]==null?"<strong>Visita sin comentarios</strong>":substr($data["COM_TEXT"],0,30)."... ".CHtml::link("Leer más", array ("visita/view", "id"=>$data["ID_VISITA"]))',
 		),
 		array(
 		'name'=>'Me gusta',
@@ -134,12 +135,10 @@ $('#form').submit(function(){
 		),
 		),
 	),
-	'emptyText' => 'El amigo buscado no ha realizado visitas',
+	'emptyText' => 'El amigo buscado no existe o no ha realizado visitas',
 ));
  ?>
 </div>
-
-<h1>Alta de amigos</h1>
 
 
 <?php
@@ -153,17 +152,18 @@ $('#form').submit(function(){
 	),
 	'htmlOptions'=>array('class'=>'well'),
 )); ?>
-		
+		<legend>Alta de amigos</legend>
 		<div class="alert in alert-block alert-success" style="display:none"></div>
 		<div class="row-user-single">
 			<?php echo $addform->errorSummary($model); ?>
-			<?php echo $addform->textField($model,'NOM_AMIGO',array('class'=>'input-xxlarge','size'=>50,'maxlength'=>50)); ?>
+			<?php echo $addform->textField($model,'NOM_AMIGO',array('class'=>'span7','size'=>50,'maxlength'=>50,'placeholder' => 'Introduce el nombre del amigo a agregar',)); ?>
 			<?php $this->widget('bootstrap.widgets.TbButton', array(
 							'id'=>'creaAmigo',
 							'buttonType'=>'ajaxSubmit',
 							'type'=>'primary',
+							'icon'=>'icon-plus-sign',
 							'url'=>$this -> createUrl('amigo/create'),
-							'label'=>'Nuevo amigo',
+							'label'=>'Agrega amigo',
 							'ajaxOptions' => array(
 									'type'=>'POST',
 									'dataType'=>'json',
