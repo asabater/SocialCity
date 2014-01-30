@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 
 Yii::app()->clientScript->registerScript('search', "
-$('.form-actions form').submit(function(){
+$('#form').submit(function(){
 	$('.search-form').show('slow');
 	$('#amigo_id').text($(\"#Autocompleta_amigo\").val());
 	$('#amigo-grid').yiiGridView('update', {
@@ -18,14 +18,14 @@ $('.form-actions form').submit(function(){
 	return false;
 });
 ");
+
 ?>
 
 <h1>Buscador de amigos</h1>
 
-<div class="form-actions">
-
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'id'=>'form'
+	'id'=>'form',
+	'htmlOptions'=>array('class'=>'well'),
 )); ?>
 	<fieldset>
 		<div class="input-append">
@@ -80,7 +80,7 @@ $('.form-actions form').submit(function(){
 		</div>
 	</fieldset>
 <?php $this->endWidget(); ?>
-</div> 
+
 <div class="search-form" style="display:none">
 <h1 id="amigo_id"></h1>
 <?php 
@@ -137,39 +137,54 @@ $('.form-actions form').submit(function(){
 	'emptyText' => 'El amigo buscado no ha realizado visitas',
 ));
  ?>
-</div>	
-
+</div>
 
 <h1>Alta de amigos</h1>
+
 
 <?php
 	$addform=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'agregaAmigo',
     'type'=>'inline',
+	'enableAjaxValidation'=>false,
 	'enableClientValidation'=>true,
-    'clientOptions'=>array(
+	'clientOptions' => array(
 		'validateOnSubmit'=>true,
 	),
 	'htmlOptions'=>array('class'=>'well'),
 )); ?>
-		<div class="errorMessage" id="formResult"></div>
-        <div class="row-user-single">
-		<?php echo $addform->errorSummary($model); ?>
-		<?php echo $addform->textField($model,'NOM_AMIGO',array('class'=>'input-xxlarge','size'=>50,'maxlength'=>50)); ?>
-		<?php echo $addform->error($model,'NOM_AMIGO'); ?>
-		<?php $this->widget('bootstrap.widgets.TbButton', array(
-						'id'=>'creaAmigo',
-						'buttonType'=>'ajaxSubmit',
-						'type'=>'primary',
-						'url'=>$this -> createUrl('amigo/create'),
-						'label'=>'Nuevo amigo',
-						'ajaxOptions' => array(
-								'success' => 'function(data){
-                    				alert("El nuevo amigo ha sido creado correctamente");
-								}',
-                    			'error'=>'function(data) {
-           							alert("Ha habido un error en el alta del amigo, por favor inténtelo de nuevo");
-        						}',
-						)));
-		?>
+		
+		<div class="alert in alert-block alert-success" style="display:none"></div>
+		<div class="row-user-single">
+			<?php echo $addform->errorSummary($model); ?>
+			<?php echo $addform->textField($model,'NOM_AMIGO',array('class'=>'input-xxlarge','size'=>50,'maxlength'=>50)); ?>
+			<?php $this->widget('bootstrap.widgets.TbButton', array(
+							'id'=>'creaAmigo',
+							'buttonType'=>'ajaxSubmit',
+							'type'=>'primary',
+							'url'=>$this -> createUrl('amigo/create'),
+							'label'=>'Nuevo amigo',
+							'ajaxOptions' => array(
+									'type'=>'POST',
+									'dataType'=>'json',
+									'success'=>'function(data) {
+										if(data.status=="success"){
+										 $(".alert-success").show();
+	                         			 $(".alert-success").html("<strong>"+data.amigo+"</strong>" + " ha sido dado de alta correctamente");
+	                         			 $("#agregaAmigo")[0].reset();
+										 $(".alert-success").fadeOut(4000);
+	                        			}
+	                         			else{
+	                       				 $.each(data, function(key, val) {
+	                        			 $(".alert-error").html(val);                                                    
+	                        			 $(".alert-error").show();
+										 $( "#Amigo_NOM_AMIGO" ).focus(function() {
+											$(".alert-error").hide("slow");
+											});
+	                        			});
+	                        			}       
+	                        		}',
+							)));
+			?>
+		</div>
 <?php $this->endWidget(); ?>
