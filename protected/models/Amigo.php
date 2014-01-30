@@ -8,14 +8,11 @@
  * @property string $NOM_AMIGO
  *
  * The followings are the available model relations:
- * @property Comentario $comentario
- * @property Visita-amigo[] $visita-amigos
+ * @property Comentario[] $comentarios
+ * @property VisitaAmigo[] $visitaAmigos
  */
 class Amigo extends CActiveRecord
 {
-	
-	public $nombre_amigos;
-	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -34,6 +31,7 @@ class Amigo extends CActiveRecord
 		return array(
 			array('NOM_AMIGO', 'required'),
 			array('NOM_AMIGO', 'length', 'max'=>50),
+			array('NOM_AMIGO', 'match', 'pattern'=>'/^[a-zA-Z]*$/', 'message'=>'El nombre del amigo únicamente puede contener letras'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('ID_AMIGO, NOM_AMIGO', 'safe', 'on'=>'search'),
@@ -48,8 +46,8 @@ class Amigo extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'comentario' => array(self::HAS_ONE, 'Comentario', 'ID_COMENTARIO'),
-			'visita-amigos' => array(self::HAS_MANY, 'Visita-amigo', 'ID_AMIGO'),
+			'comentarios' => array(self::HAS_MANY, 'Comentario', 'ID_AMIGO'),
+			'visitaAmigos' => array(self::HAS_MANY, 'VisitaAmigo', 'ID_AMIGO'),
 		);
 	}
 
@@ -81,8 +79,12 @@ class Amigo extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		$criteria->together=true;
+		$criteria->with = array('visitaAmigos');
 
+		$criteria->compare('ID_AMIGO',$this->ID_AMIGO);
 		$criteria->compare('NOM_AMIGO',$this->NOM_AMIGO,true);
+		$criteria->compare('visitaAmigos.ID_AMIGO',$this->ID_AMIGO, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

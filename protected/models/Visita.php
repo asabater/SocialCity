@@ -10,8 +10,9 @@
  * @property integer $ID_CIUDAD
  *
  * The followings are the available model relations:
+ * @property Comentario[] $comentarios
  * @property Ciudad $iDCIUDAD
- * @property Visita-amigo[] $visita-amigos
+ * @property VisitaAmigo[] $visitaAmigos
  */
 class Visita extends CActiveRecord
 {
@@ -48,8 +49,9 @@ class Visita extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'iDCIUDAD' => array(self::BELONGS_TO, 'Ciudad', 'ID_CIUDAD'),
-			'visita-amigos' => array(self::HAS_MANY, 'Visita-amigo', 'ID_VISITA'),
+			'comentarios' => array(self::HAS_MANY, 'Comentario', 'ID_VISITA'),
+			'FK_Ciudad_Visita' => array(self::BELONGS_TO, 'Ciudad', 'ID_CIUDAD'),
+			'visitaAmigos' => array(self::HAS_MANY, 'VisitaAmigo', 'ID_VISITA'),
 		);
 	}
 

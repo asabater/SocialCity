@@ -1,12 +1,15 @@
 <?php
+/* @var $this ComentarioController */
+/* @var $model Comentario */
+
 $this->breadcrumbs=array(
 	'Comentarios'=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'List Comentario','url'=>array('index')),
-	array('label'=>'Create Comentario','url'=>array('create')),
+	array('label'=>'List Comentario', 'url'=>array('index')),
+	array('label'=>'Create Comentario', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -15,7 +18,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('comentario-grid', {
+	$('#comentario-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -30,14 +33,14 @@ You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&g
 or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
+<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
 
-<?php $this->widget('bootstrap.widgets.TbGridView',array(
+<?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'comentario-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
@@ -46,9 +49,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'COM_TEXT',
 		'ID_AMIGO',
 		'ID_VISITA',
+		'FECHA_COMENTARIO',
 		'COM_LIKEs',
 		array(
-			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'class'=>'CButtonColumn',
 		),
 	),
 )); ?>

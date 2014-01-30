@@ -1,7 +1,12 @@
+<?php
+/* @var $this ComentarioController */
+/* @var $data Comentario */
+?>
+
 <div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('ID_COMENTARIO')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->ID_COMENTARIO),array('view','id'=>$data->ID_COMENTARIO)); ?>
+	<?php echo CHtml::link(CHtml::encode($data->ID_COMENTARIO), array('view', 'id'=>$data->ID_COMENTARIO)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('COM_TEXT')); ?>:</b>
@@ -14,6 +19,10 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('ID_VISITA')); ?>:</b>
 	<?php echo CHtml::encode($data->ID_VISITA); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('FECHA_COMENTARIO')); ?>:</b>
+	<?php echo CHtml::encode($data->FECHA_COMENTARIO); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('COM_LIKEs')); ?>:</b>
