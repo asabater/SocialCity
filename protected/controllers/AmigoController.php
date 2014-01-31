@@ -65,7 +65,7 @@ class AmigoController extends Controller
 			foreach($amigos as $amigo) {
 				$return_array[] = array(
 						'label'=>$amigo["NOM_AMIGO"],
-						'value'=>$amigo["NOM_AMIGO"],
+						//'value'=>$amigo["NOM_AMIGO"],
 						'id'=>$amigo["ID_AMIGO"],
 				);
 			}
@@ -103,23 +103,32 @@ class AmigoController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+public function actionCreate()
 	{
 		$model=new Amigo;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		//$this->performAjaxValidation($model);
 
 		if(isset($_POST['Amigo']))
 		{
 			$model->attributes=$_POST['Amigo'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->ID_AMIGO));
+			$valid=$model->validate();
+			if($valid){
+				$model->save();
+				echo CJSON::encode(array(
+						'status'=>'success',
+						'amigo'=>$model->NOM_AMIGO
+				));
+				Yii::app()->end();
+			}
+			else{
+				$error = CActiveForm::validate($model);
+				if($error!='[]')
+					echo $error;
+				Yii::app()->end();
+			}
 		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
 	}
 
 	/**
@@ -168,10 +177,11 @@ class AmigoController extends Controller
 		$model=new Amigo();
 		$model2 = new visitaAmigo('buscaVisitasAmigo');
 		$model2->unsetAttributes();  // clear any default values
+		
 		if(isset($_GET['VisitaAmigo'])){
 			$model2->attributes=$_GET['VisitaAmigo'];
 		}
-		else{$model2->ID_AMIGO=0;}
+		//else{$model2->ID_AMIGO=0;}
 			
 		$this->render('index',array(
 			'model'=>$model,'model2'=>$model2
@@ -214,7 +224,7 @@ class AmigoController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='amigo-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='agregaAmigo')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

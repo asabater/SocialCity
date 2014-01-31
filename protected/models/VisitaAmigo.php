@@ -90,10 +90,36 @@ class VisitaAmigo extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+		//$criteria->together=true;
+		$criteria->with = array('FK_Amigos_Visitas','FK_Visita_Visitas');
+		//$criteria->addSearchCondition('iDAMIGO.NOM_AMIGO', $this->ID_AMIGO);
 
-		$criteria->compare('ID_VISITA_AMIGO',$this->ID_VISITA_AMIGO);
-		$criteria->compare('ID_VISITA',$this->ID_VISITA);
-		$criteria->compare('ID_AMIGO',$this->ID_AMIGO);
+		//$criteria->compare('ID_VISITA_AMIGO',$this->ID_VISITA_AMIGO);
+		//$criteria->compare('ID_VISITA',$this->ID_VISITA);
+		$criteria->compare('FK_Amigos_Visitas.ID_AMIGO',$this->ID_AMIGO, true);
+		$criteria->compare('FK_Amigos_Visitas.NOM_AMIGO',$this->NOM_AMIGO, true);
+		$criteria->compare('FK_Visita_Visitas.FECHA_VISITA',$this->FECHA_VISITA, true);
+		//$criteria->compare('iDAMIGO.NOM_AMIGO',$this->ID_AMIGO, true);	
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+	
+	public function buscaVisitas()
+	{
+		$subSQL=Yii::app()->db->createCommand()
+			->select('ID_VISITA')
+			->from ('visita_amigo')
+			->where ('ID_AMIGO = 4')
+			->text;
+		$criteria = new CDbCriteria;
+		$criteria->select = array('a.FECHA_VISITA AS FECHA, a.LIKE_VISITA AS GUSTA, GROUP_CONCAT(b.NOM_AMIGO) AS ACOMPANYANTES');
+		$criteria->with = array('FK_Visita_Visitas'=>array('together' => true, 'alias'=>'a', 'joinType' => 'INNER JOIN'),'FK_Amigos_Visitas'=>array('together' => true, 'alias'=>'b', 'joinType' => 'INNER JOIN'));
+		//$criteria->compare('FK_Amigos_Visitas.ID_AMIGO',$this->ID_AMIGO);
+		//$criteria->select = array('', "GROUP_CONCAT(NOM_AMIGO) as acompanyantes", 'ME_GUSTA');
+		$criteria->addCondition("t.ID_VISITA in ($subSQL)");
+		$criteria->group = 't.ID_VISITA';
 		
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
@@ -120,7 +146,14 @@ class VisitaAmigo extends CActiveRecord
 			->text;
 			
 		$key="ID_VISITA";
-		$sql="SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_VISITA IN ($subSQL) GROUP BY ID_VISITA";
+		$sql="SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT
+				FROM (SELECT ID_VISITA, ID_AMIGO
+							FROM VISITA_AMIGO
+								WHERE ID_VISITA IN ($subSQL)) T2
+					LEFT JOIN VISITA USING (ID_VISITA)
+					LEFT JOIN AMIGO USING (ID_AMIGO)
+					LEFT JOIN COMENTARIO USING (ID_VISITA)
+				GROUP BY ID_VISITA";
 			
 		return $dataProvider=new CSqlDataProvider($sql, array(
 				'params'=>$params,

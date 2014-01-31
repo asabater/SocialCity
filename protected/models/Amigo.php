@@ -29,9 +29,10 @@ class Amigo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('NOM_AMIGO', 'required'),
+			array('NOM_AMIGO', 'required', 'message'=>'<strong>¡Error!</strong>: El nombre del amigo no puede estar vacío'),
 			array('NOM_AMIGO', 'length', 'max'=>50),
-			array('NOM_AMIGO', 'match', 'pattern'=>'/^[a-zA-Z]*$/', 'message'=>'El nombre del amigo únicamente puede contener letras'),
+			array('NOM_AMIGO', 'match', 'pattern'=>'/^[a-zA-Z_áéíóúàèñ\s]*$/', 'message'=>'<strong>¡Error!</strong>: El nombre del amigo únicamente puede contener letras'),
+			array('NOM_AMIGO', 'unique', 'message'=>'<strong>{value}</strong> ya existe en el sistema'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('ID_AMIGO, NOM_AMIGO', 'safe', 'on'=>'search'),

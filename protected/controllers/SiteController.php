@@ -129,7 +129,7 @@ class SiteController extends Controller
 			foreach($amigos as $amigo) {
 				$return_array[] = array(
 						'label'=>$amigo["NOM_AMIGO"],
-						'value'=>$amigo["NOM_AMIGO"],
+						// 'value'=>$amigo["NOM_AMIGO"],
 						'id'=>$amigo["ID_AMIGO"],
 				);
 			}
