@@ -15,9 +15,9 @@ $this->menu=array(
 
 <h1>Nueva Ciudad</h1>
 
+ <?php echo $model->ID_CIUDAD?>
  
- 
- <form action="?r=ciudad/create?" method="post" enctype="application/x-www-form-urlencoded" name="wiki" target="_top">
+ <form action="?r=ciudad/create&id=".<?php echo $model->ID_CIUDAD?> method="post" enctype="application/x-www-form-urlencoded" name="wiki" target="_top">
   <input type="text" id="city" class="span9"/>
  <textarea id="comentario" clas="span9" > </textarea>
   <input id="wiki" name="wiki" type="submit" />
