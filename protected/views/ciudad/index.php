@@ -6,7 +6,9 @@ $this -> breadcrumbs = array('Ciudades', );
 
 // $this -> menu = array( array('label' => 'Create Ciudad', 'url' => array('create')), array('label' => 'Manage Ciudad', 'url' => array('admin')), );
 $model2=new Ciudad();
-
+$modelVisita = new Visita();
+$modelAmigo = new Amigo();
+$modelComentario = new Comentario();
 ?>
 
 <script>
@@ -78,7 +80,7 @@ $model2=new Ciudad();
 	'id'=>'form'
 )); ?>
 <?php 
-echo $form->textField($model2,'ID_CIUDAD');
+echo $form->hiddenField($model2,'ID_CIUDAD');
 
 $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	// 'model'=>$model,
@@ -186,3 +188,28 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 ));
  ?>
 </div>	
+
+<?php
+/** @var BootActiveForm $form */
+
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    'id'=>'horizontalForm',
+    'type'=>'horizontal',
+));
+
+$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+    'name'=>'publishDate',
+    // additional javascript options for the date picker plugin
+    'options'=>array(
+        'showAnim'=>'fold',
+    ),
+    'htmlOptions'=>array(
+        'style'=>'height:20px;'
+    ),
+    'language' =>'es'
+));
+
+echo $form->textAreaRow($modelComentario, 'COM_TEXT', array('class'=>'span5', 'maxlength' => 0, 'rows' => 6, 'cols' => 40));
+echo $form->checkBoxListInlineRow($modelAmigo->search(), 'NOM_AMIGO', array('disabled'=>true));
+
+$this->endWidget(); ?>
