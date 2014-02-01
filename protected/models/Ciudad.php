@@ -13,7 +13,7 @@
  *
  * The followings are the available model relations:
  * @property Visita[] $visitas
- */
+ */ 
 class Ciudad extends CActiveRecord {
 	/**
 	 * @return string the associated database table name
@@ -91,6 +91,12 @@ class Ciudad extends CActiveRecord {
 		// session_start(); 
 		// $id_ciudad = $_SESSION['id'];
 		// var_dump($_SESSION);
+		
+		if(isset($_SESSION['id'])){
+			$id = $_SESSION['id'];
+		} else {
+			$id = 0;
+		}
 		
 		$criteria = new CDbCriteria;
 
