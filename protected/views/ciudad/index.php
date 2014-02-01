@@ -107,9 +107,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 			$(\'#Ciudad_ID_CIUDAD\').val(ciudadSeleccionada);
 			// Show information div
 			$("#CityInfo").css("display","inline-block");
-			
-			
-			
+
 			$("#CityTitle").html("<h2>"+map[item].label+"</h2>");
 			$("#Counter").html(map[item].likes);
 			$("#CityOpinion").html(map[item].comm);
