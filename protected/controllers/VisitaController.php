@@ -51,9 +51,22 @@ class VisitaController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		//$ultima_ciudad = Ciudad::model()->findBySql('select * from ciudad order by ID_CIUDAD desc');
+		$ultima_visita = Visita::model()->findByPk($id);
+		$ultima_ciudad = Ciudad::model()->findByPk($ultima_visita->ID_CIUDAD);
+		$amigos_visita = VisitaAmigo::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
+		//$comentarios = Comentario::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
+		$comentarios = Comentario::model()->findAllBySql('select * from comentario where ID_VISITA='.$ultima_visita->ID_VISITA.' order by FECHA_COMENTARIO desc');
+		
+		$amigos = Amigo::model()->findAllBySql('select * from amigo order by ID_AMIGO asc');
+		
+		$this->render('index',array(
+			'ultima_visita'=>$ultima_visita,
+			'ultima_ciudad'=>$ultima_ciudad,
+			'amigos_visita'=>$amigos_visita,
+			'comentarios'=>$comentarios,
+			'amigos'=>$amigos
+			));
 	}
 
 	/**
