@@ -89,11 +89,8 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
     		ciudades = [];
    			map = {};
      	 	$.ajax({
-<<<<<<< HEAD
        	 		url: "'.$this->createUrl('autocompletaCiudades').'",
-=======
        	 		url: "' . $this -> createUrl('site/autocompletaCiudades') . '",
->>>>>>> 74e9c94108e76f22fa5ac5b6a66736816936a527
        			type: "GET",
        	 		dataType:"json",
        			data: {term: query},
@@ -119,7 +116,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 			getDesc(map[item].label); 
 
     	}', 'items' => 4, ), ));
-?>
+?> 
 <?php $this->endWidget(); ?>
 <div id='CityInfo'>
 	<div id='CityTitle'></div>
