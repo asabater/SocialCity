@@ -32,7 +32,6 @@
                 array('label'=>'Nueva Ciudad', 'url'=>array('/ciudad/create')),
                 array('label'=>'Ciudades', 'url'=>array('/ciudad')),
                 array('label'=>'Ciudades visitadas', 'url'=>array('/visita/index')),
-				array('label'=>'Ciudades visitadas', 'url'=>array('/visita/view')),
             	array('label'=>'Calendario de visitas', 'url'=>array('/calendario/calendario')),
 				array('label'=>'Amigos', 'url'=>array('/amigo/index')),
                 //array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
