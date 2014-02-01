@@ -90,7 +90,7 @@ class VisitaController extends Controller
 			));
 	}
 	
-	/*
+	
 	public function actionCreate()
 	{
 		$model=new Visita;
@@ -109,7 +109,7 @@ class VisitaController extends Controller
 			'model'=>$model,
 		));
 	}
-	*/
+
 	
 	public function actionMegusta($id)
 	{
@@ -200,9 +200,11 @@ class VisitaController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
-	/**
+	/*
+	 * *
 	 * Lists all models.
 	 */
+	 /*
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Visita');
