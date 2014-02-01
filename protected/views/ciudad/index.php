@@ -47,18 +47,20 @@ $model2=new Ciudad();
 		}
 		// beforeSend : setHeader
 		});
-		
+	
 		$.ajax({
-		url : <?php echo Yii::app()->request->baseUrl; ?>'/add2session.php?id=' + eval($('#Ciudad_ID_CIUDAD').val()),
-		type : 'GET',
-		crossDomain : true,
-		dataType : 'jsonp',
-		success : function(data, textStatus, jqXHR) {
+		  url : <?php echo Yii::app()->request->baseUrl; ?>'/add2session.php?id=' + eval($('#Ciudad_ID_CIUDAD').val()),
+		  type: 'GET',
+		  async: true,
+		  dataType : 'jsonp',
+		  data: 'id='+$('#Ciudad_ID_CIUDAD').val(),
+		  success: function(data, textStatus, jqXHR) {
 			jQuery.throughObject(data);
+		  error: alert("nooo");
 		},
 
-		// success : function(wikiCity) {
 
+		// success : function(wikiCity) {
 		// console.log(obj);
 		// alert(w);
 
@@ -67,7 +69,7 @@ $model2=new Ciudad();
 		// })
 		// },
 		error : function() {
-			// alert('Failed!');
+			alert('Failed!');
 		}
 		// beforeSend : setHeader
 		});
@@ -78,7 +80,7 @@ $model2=new Ciudad();
 	'id'=>'form'
 )); ?>
 <?php 
-// echo $form->textField($model2,'ID_CIUDAD');
+echo $form->hiddenField($model2,'ID_CIUDAD');
 
 $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	// 'model'=>$model,
