@@ -39,7 +39,7 @@
 		
 		
 		<?php echo $form->labelEx($model,'COMM_CIUDAD'); ?>
-		<textarea class="span9" <?php echo $form->textField($model,'COMM_CIUDAD',array('size'=>60,'maxlength'=>300)); ?> </textarea>
+		<textarea  id="citycomm"  placeholder="Introduce tu comentario" class="span9" <?php echo $form->textField($model,'COMM_CIUDAD',array('size'=>60,'maxlength'=>300));?></textarea>
 		<?php echo $form->error($model,'COMM_CIUDAD'); ?>
 	</div>
 
@@ -77,47 +77,10 @@
                 'limit': 4
             },
             success: function(data) {
-            	getAreaMetaInfo_Wikipedia(1773)
                 response(data[1]);     
             }
         });      
     }
 });
-
-function getAreaMetaInfo_Wikipedia(page_id) {
-  $.ajax({
-    url: 'http://en.wikipedia.org/w/api.php',
-    data: {
-      action:'query',
-      pageids:page_id,
-      format:'json'
-    },
-    dataType:'jsonp',
-    success: function(data) {
-      title = data.query.pages[page_id].title.replace(' ','_');
-      $.ajax({
-        url: 'http://en.wikipedia.org/w/api.php',
-        data: {
-          action:'parse',
-          prop:'text',
-          page:title,
-          format:'json'
-        },
-        dataType:'jsonp',
-        success: function(data) {
-          wikipage = $("<div>"+data.parse.text['*']+"</div>").children('p:first');
-          wikipage.find('sup').remove();
-          wikipage.find('a').each(function() {
-            $(this)
-              .attr('href', 'http://en.wikipedia.org'+$(this).attr('href'))
-              .attr('target','wikipedia');
-          });
-          $("#wiki_container").append(wikipage);
-          $("#wiki_container").append("<a href='http://en.wikipedia.org/wiki/"+title+"' target='wikipedia'>Read more on Wikipedia</a>");
-        }
-      });
-    }
-  });
-}
 
 </script>
