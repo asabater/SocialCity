@@ -47,7 +47,6 @@
 		
 		<input id="pgid" <?php echo $form->textField($model,'PAGE_ID_CIUDAD',array('size'=>10,'maxlength'=>10)); ?>
 		
-		
 	</div>
 
 	<div class="row">
