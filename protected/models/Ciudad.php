@@ -13,7 +13,7 @@
  *
  * The followings are the available model relations:
  * @property Visita[] $visitas
- */
+ */ 
 class Ciudad extends CActiveRecord {
 	/**
 	 * @return string the associated database table name
@@ -92,6 +92,12 @@ class Ciudad extends CActiveRecord {
 		// $id_ciudad = $_SESSION['id'];
 		// var_dump($_SESSION);
 		
+		if(isset($_SESSION['id'])){
+			$id = $_SESSION['id'];
+		} else {
+			$id = 0;
+		}
+		
 		$criteria = new CDbCriteria;
 
 		$criteria -> compare('ID_CIUDAD', $this -> ID_CIUDAD);
@@ -110,7 +116,7 @@ class Ciudad extends CActiveRecord {
 		
 		$key = "ID_VISITA";
 		//SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_VISITA IN ($subSQL) GROUP BY ID_VISITA
-		$sql = "SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_CIUDAD = ".$_SESSION["id"]." GROUP BY ID_VISITA";
+		$sql = "SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_CIUDAD = ".$id." GROUP BY ID_VISITA";
 		// echo "session:".$_SESSION["id"];
 		// echo($sql);
 		// SELECT *
