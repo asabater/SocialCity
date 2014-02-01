@@ -71,8 +71,9 @@ class CiudadController extends Controller
 		if(isset($_POST['Ciudad']))
 		{
 			$model->attributes=$_POST['Ciudad'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->ID_CIUDAD));
+			$model->save();
+			//if($model->save())
+				//$this->redirect(array('view','id'=>$model->ID_CIUDAD));
 		}
 
 		$this->render('create',array(
