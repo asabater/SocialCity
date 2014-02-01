@@ -78,7 +78,7 @@ $model2=new Ciudad();
 	'id'=>'form'
 )); ?>
 <?php 
-echo $form->textField($model2,'ID_CIUDAD');
+// echo $form->textField($model2,'ID_CIUDAD');
 
 $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	// 'model'=>$model,
