@@ -61,8 +61,37 @@ class ComentarioController extends Controller
 	 */
 	public function actionCreate()
 	{
+		$id_amigo = $_POST['id_amigo'];
+		$com_text = $_POST['com_text'];
+		$id_visita = $_POST['id_visita'];
+		$fecha_comentario = date('Y-m-d H:i:s');
+	
+		$comentario = new Comentario;
+		
+		$comentario->ID_AMIGO = $id_amigo;
+		$comentario->COM_TEXT = $com_text;
+		$comentario->ID_VISITA = $id_visita;
+		//$comentario->ID_COMENTARIO = '400';
+		$comentario->FECHA_COMENTARIO = $fecha_comentario;
+		$comentario->save();
+		
+		$fecha_comentario = date('d-m-Y G:i:s', strtotime($fecha_comentario));
+		
+		$nom_amigo = Amigo::model()->findByPk($id_amigo);
+		
+		$respuesta['NOM_AMIGO'] = $nom_amigo->NOM_AMIGO;
+		//$respuesta['ID_AMIGO'] = $id_amigo;
+		$respuesta['COM_TEXT'] = $com_text;
+		$respuesta['ID_VISITA'] = $id_visita;
+		$respuesta['FECHA_COMENTARIO'] = $fecha_comentario;
+		
+		//$comentario = Comentario::model()->findByPk($id_comentario);
+		//$com_likes = $comentario->COM_LIKEs;
+		$respuesta['COM_LIKEs'] = $comentario->COM_LIKEs;
+		
+		echo json_encode($respuesta);
+/*		
 		$model=new Comentario;
-
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -75,9 +104,22 @@ class ComentarioController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
-		));
+		));*/
 	}
+	
+	public function actionMegusta()
+	{
+		$id_comentario = $_POST['id_comentario'];		
+		$comentario = Comentario::model()->findByPk($id_comentario);
+		$com_likes = $comentario->COM_LIKEs;
+		
+		$com_likes = $com_likes + 1;
 
+		$comentario->saveAttributes(array('COM_LIKEs' => $com_likes));
+		$respuesta['ID_COMENTARIO']= $comentario->ID_COMENTARIO;
+		$respuesta['COM_LIKEs']= $comentario->COM_LIKEs;
+		echo json_encode($respuesta);
+	}
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
