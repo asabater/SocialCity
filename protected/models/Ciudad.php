@@ -92,7 +92,7 @@ class Ciudad extends CActiveRecord {
 		// $id_ciudad = $_SESSION['id'];
 		// var_dump($_SESSION);
 		
-		if(isset($_SESSION['id'])){
+		if(isset($_SESSION['id']) && (is_numeric($_SESSION['id']))){
 			$id = $_SESSION['id'];
 		} else {
 			$id = 0;
