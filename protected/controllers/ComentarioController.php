@@ -72,7 +72,6 @@ class ComentarioController extends Controller
 		$comentario->ID_AMIGO = $id_amigo;
 		$comentario->COM_TEXT = $com_text;
 		$comentario->ID_VISITA = $id_visita;
-		//$comentario->ID_COMENTARIO = '400';
 		$comentario->FECHA_COMENTARIO = $fecha_comentario;
 		$comentario->save();
 		
@@ -81,16 +80,13 @@ class ComentarioController extends Controller
 		$nom_amigo = Amigo::model()->findByPk($id_amigo);
 		
 		$respuesta['NOM_AMIGO'] = $nom_amigo->NOM_AMIGO;
-		//$respuesta['ID_AMIGO'] = $id_amigo;
 		$respuesta['COM_TEXT'] = $com_text;
 		$respuesta['ID_VISITA'] = $id_visita;
 		$respuesta['FECHA_COMENTARIO'] = $fecha_comentario;
-		
-		//$comentario = Comentario::model()->findByPk($id_comentario);
-		//$com_likes = $comentario->COM_LIKEs;
 		$respuesta['COM_LIKEs'] = $comentario->COM_LIKEs;
+		$respuesta['ID_COMENTARIO'] = $comentario->ID_COMENTARIO;
 		
-		echo json_encode($respuesta);	 
+		echo json_encode($respuesta);
 	}
 	/**
 	 * Updates a particular model.
