@@ -16,4 +16,5 @@ $this->menu=array(
 <h1>Nueva Ciudad</h1>
 
  <?php echo $model->ID_CIUDAD?>
+
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

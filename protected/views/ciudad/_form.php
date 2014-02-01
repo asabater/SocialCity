@@ -32,7 +32,7 @@
 	</div>
 	
 	<div class="row">
-		<input type="HIDDEN" value="http://en.wikipedia.org" <?php echo $form->textField($model,'LINK_CIUDAD',array('size'=>60,'maxlength'=>200)); ?>	
+		<input type="HIDDEN" value="www.google.es" <?php echo $form->textField($model,'LINK_CIUDAD',array('size'=>60,'maxlength'=>200)); ?>	
 	</div>
 
 	<div class="row">
