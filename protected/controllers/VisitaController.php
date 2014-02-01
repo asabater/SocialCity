@@ -28,7 +28,7 @@ class VisitaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','megusta','visitaPeriodo'),
+				'actions'=>array('index','view','megusta','visitaPeriodo','nombre_a_id','id_a_nombre'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -173,11 +173,32 @@ class VisitaController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Visita');
+		$ultima_ciudad = Ciudad::model()->findBySql('select * from ciudad order by ID_CIUDAD desc');
+		$ultima_visita = Visita::model()->findBySql('select * from visita where ID_CIUDAD='.$ultima_ciudad->ID_CIUDAD.' order by FECHA_VISITA desc');
+		$amigos_visita = VisitaAmigo::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
+		//$comentarios = Comentario::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
+		$comentarios = Comentario::model()->findAllBySql('select * from comentario where ID_VISITA='.$ultima_visita->ID_VISITA.' order by FECHA_COMENTARIO desc');
+		
+		$amigos = Amigo::model()->findAllBySql('select * from amigo order by ID_AMIGO asc');
+		
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+			'ultima_visita'=>$ultima_visita,
+			'ultima_ciudad'=>$ultima_ciudad,
+			'amigos_visita'=>$amigos_visita,
+			'comentarios'=>$comentarios,
+			'amigos'=>$amigos
+			));
 	}
+	
+	public function nombre_a_id($nombre_amigo){
+		$amigo = Amigo::model()->find('NOMBRE_AMIGO='.$nombre_amigo);
+		return $amigo->ID_AMIGO;
+	}
+	 
+	public function id_a_nombre($id_amigo){
+		$amigo = Amigo::model()->findByPk($id_amigo);
+		return $amigo->NOM_AMIGO;
+	}	
 
 	/**
 	 * Manages all models.
