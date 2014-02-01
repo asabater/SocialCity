@@ -91,26 +91,7 @@ class ComentarioController extends Controller
 		$respuesta['COM_LIKEs'] = $comentario->COM_LIKEs;
 		
 		echo json_encode($respuesta);	 
-	/*
-	public function actionCreate()
-	{
-		$model=new Comentario;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Comentario']))
-		{
-			$model->attributes=$_POST['Comentario'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->ID_COMENTARIO));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
 	}
-	*/
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -201,7 +182,7 @@ class ComentarioController extends Controller
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
 	 */
-	 }
+	 
 	public function loadModel($id)
 	{
 		$model=Comentario::model()->findByPk($id);
