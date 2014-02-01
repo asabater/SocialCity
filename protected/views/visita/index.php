@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js">
-</script>
+
 <script> 
 
 function nl2br(str) { 
@@ -10,21 +8,15 @@ function nl2br(str) {
 } 
 
 $(document).ready(function(){
-	$('.like_btn').click(function() 
-    {
-        //e.preventDefault();
-
-        var id_comentario = $(this).data("id");
-
-            $.post("/SocialCity/index.php?r=comentario/megusta", 
-			{
-				id_comentario : id_comentario
-			}, 
-			function(data) 
-            {
-				//alert($("#").attr("data-id");
-				$("#"+data['ID_COMENTARIO']).text(data['COM_LIKEs']);
-            },'json');
+	$("p").on("click",".like_btn",function(){		
+		$.post("/SocialCity/index.php?r=comentario/megusta", 
+		{
+			id_comentario : $(this).data("id")
+		}, 
+		function(data) 
+		{
+			$("#"+data['ID_COMENTARIO']).html(data['COM_LIKEs'] + ' likes <br/><br/>');
+		},'json');
     });
 
 	$("#boton_enviar").click(function(){
@@ -36,11 +28,11 @@ $(document).ready(function(){
 				id_visita : <?php echo $ultima_visita->ID_VISITA;?>
 			},
 			function(data,status){
-				//alert("Data: " + data['ID_AMIGO'] + data['COM_TEXT'] + data['ID_VISITA'] + data['FECHA_COMENTARIO']+ "\nStatus: " + status);
-				$("#comentarios").prepend(data['NOM_AMIGO']+' dijo:<br/>'+nl2br(data['COM_TEXT'])+
-				'<br/>'+data['FECHA_COMENTARIO']+
-				'<br/>Likes ' + '<span id=\"'+data['ID_COMENTARIO']+'\">'+data['COM_LIKEs']+' </span>'+
-				'<button class=\"like_btn\" data-id=\"'+data['ID_COMENTARIO']+'\">+1</button><br/><br/>');
+				$("#comentarios").prepend('<br/>'+data['NOM_AMIGO']+': '+nl2br(data['COM_TEXT'])+
+				'<br/>'+data['FECHA_COMENTARIO']+ 
+				'<button style=\"background-color:white; border:none; outline-color:white;\" class=\"like_btn\" data-id=\"'+
+				data['ID_COMENTARIO']+'\"><img src=\"images/like2_.png\"/></button>'+
+				'<span id=\"'+data['ID_COMENTARIO']+'\">0 likes<br/><br/></span>');
 			},'json');
 		};
 	});
@@ -74,7 +66,7 @@ xmlhttp.onreadystatechange=function()
 }
 </script>
 </head>
-
+<body>
 <?php
 	$this->breadcrumbs=array(
 	'Ciudades visitadas',);
@@ -115,22 +107,27 @@ echo $ultima_ciudad->COMM_CIUDAD;
 ?>
 </select>
 
-<div align="right">
-<textarea class="form-control" id="com_text" type="text" placeholder="Introduce tu comentario" rows="3" style="width: 98%; resize: none;"></textarea>
-<button id="boton_enviar">Enviar</button>
-</div>
 
-
-<div id="comentarios">
+<textarea class="form-control" id="com_text" type="text" placeholder="Escribe un comentario..." rows="3" style="width: 98%; resize: none;"></textarea>
+<p>
+<?php $this->widget('bootstrap.widgets.TbButton', array(
+	//'buttonType'=>'submit',
+	'type'=>'primary',
+	'label'=>'Comentar',
+	'icon'=>'icon-envelope',
+	'htmlOptions'=>array('id'=>'boton_enviar'),
+	));
+?>
+<p id="comentarios">
 <?php
 	foreach($comentarios as $comentario):
-		echo $this->id_a_nombre($comentario->ID_AMIGO) . ' dijo:<br/>';
+		echo '<br/>'.$this->id_a_nombre($comentario->ID_AMIGO).': ';
 		echo nl2br($comentario->COM_TEXT) . '<br/>';
-		$fecha_visita = $comentario->FECHA_COMENTARIO;?> 
-		<?php echo $fecha_visita = date('d-m-Y G:i:s', strtotime($fecha_visita)) . '<br/>Likes ';?>
-		<span id="<?php echo $comentario->ID_COMENTARIO;?>"><?php echo $comentario->COM_LIKEs . ' ';?></span>
-		<button class="like_btn" data-id="<?php echo $comentario->ID_COMENTARIO;?>">+1</button>
-		<br/><br/>
-<?php	endforeach;
-?>
-</div id="comentarios">
+		$fecha_visita = $comentario->FECHA_COMENTARIO;
+		echo $fecha_visita = date('d-m-Y G:i:s', strtotime($fecha_visita));?>
+		<button style="background-color:white; border:none; outline-color:white;" class="like_btn" data-id="<?php echo $comentario->ID_COMENTARIO;?>"><img src="images/like2_.png"/></button>
+		<span id="<?php echo $comentario->ID_COMENTARIO;?>"><?php echo $comentario->COM_LIKEs . ' likes<br/><br/>';?></span>
+<?php endforeach;?>
+</p>
+</p>
+</body>
