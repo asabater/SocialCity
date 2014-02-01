@@ -27,12 +27,12 @@ class ComentarioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','megusta'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
@@ -116,6 +116,21 @@ class ComentarioController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
+	 
+	public function actionMegusta()
+	{
+		$id_comentario = $_POST['id_comentario'];		
+		$comentario = Comentario::model()->findByPk($id_comentario);
+		$com_likes = $comentario->COM_LIKEs;
+		
+		$com_likes = $com_likes + 1;
+
+		$comentario->saveAttributes(array('COM_LIKEs' => $com_likes));
+		$respuesta['ID_COMENTARIO']= $comentario->ID_COMENTARIO;
+		$respuesta['COM_LIKEs']= $comentario->COM_LIKEs;
+		echo json_encode($respuesta);
+	} 
+	
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
