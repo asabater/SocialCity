@@ -32,7 +32,7 @@
 	</div>
 	
 	<div class="row">
-		<input type="HIDDEN" value="http://en.wikipedia.org/w/api.php?format=xml&action=query&prop=extracts&exchars=1000&titles=" <?php echo $form->textField($model,'LINK_CIUDAD',array('size'=>60,'maxlength'=>200)); ?>	
+		<input type="HIDDEN" value="http://en.wikipedia.org" <?php echo $form->textField($model,'LINK_CIUDAD',array('size'=>60,'maxlength'=>200)); ?>	
 	</div>
 
 	<div class="row">
@@ -45,7 +45,7 @@
 
 	<div class="row">
 		
-		<input type="HIDDEN" value="0" <?php echo $form->textField($model,'PAGE_ID_CIUDAD',array('size'=>10,'maxlength'=>10)); ?>
+		<input id="pgid" <?php echo $form->textField($model,'PAGE_ID_CIUDAD',array('size'=>10,'maxlength'=>10)); ?>
 		
 	</div>
 
@@ -77,11 +77,47 @@
                 'limit': 4
             },
             success: function(data) {
+            	getAreaMetaInfo_Wikipedia(1773)
                 response(data[1]);     
             }
-        });
+        });      
     }
 });
 
+function getAreaMetaInfo_Wikipedia(page_id) {
+  $.ajax({
+    url: 'http://en.wikipedia.org/w/api.php',
+    data: {
+      action:'query',
+      pageids:page_id,
+      format:'json'
+    },
+    dataType:'jsonp',
+    success: function(data) {
+      title = data.query.pages[page_id].title.replace(' ','_');
+      $.ajax({
+        url: 'http://en.wikipedia.org/w/api.php',
+        data: {
+          action:'parse',
+          prop:'text',
+          page:title,
+          format:'json'
+        },
+        dataType:'jsonp',
+        success: function(data) {
+          wikipage = $("<div>"+data.parse.text['*']+"</div>").children('p:first');
+          wikipage.find('sup').remove();
+          wikipage.find('a').each(function() {
+            $(this)
+              .attr('href', 'http://en.wikipedia.org'+$(this).attr('href'))
+              .attr('target','wikipedia');
+          });
+          $("#wiki_container").append(wikipage);
+          $("#wiki_container").append("<a href='http://en.wikipedia.org/wiki/"+title+"' target='wikipedia'>Read more on Wikipedia</a>");
+        }
+      });
+    }
+  });
+}
 
 </script>
