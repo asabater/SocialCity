@@ -210,6 +210,6 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 ));
 
 echo $form->textAreaRow($modelComentario, 'COM_TEXT', array('class'=>'span5', 'maxlength' => 0, 'rows' => 6, 'cols' => 40));
-echo $form->checkBoxListInlineRow($modelAmigo->search(), 'NOM_AMIGO', array('disabled'=>true));
+// echo $form->checkBoxListInlineRow($modelAmigo->search(), 'NOM_AMIGO', array('disabled'=>true));
 
 $this->endWidget(); ?>
