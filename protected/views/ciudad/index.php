@@ -57,21 +57,10 @@ $model2=new Ciudad();
 		  success: function(data, textStatus, jqXHR) {
 			jQuery.throughObject(data);
 		  error: alert("nooo");
-		},
-
-
-		// success : function(wikiCity) {
-		// console.log(obj);
-		// alert(w);
-
-		// $(w.Attributes).each(function(index, element){
-		// alert(element.Value);
-		// })
-		// },
-		error : function() {
+		  },
+	      error : function() {
 			alert('Failed!');
-		}
-		// beforeSend : setHeader
+		  }
 		});
 	}
 </script>
