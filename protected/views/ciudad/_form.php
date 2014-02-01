@@ -35,9 +35,7 @@
 		<input type="HIDDEN" value="http://en.wikipedia.org/w/api.php?format=xml&action=query&prop=extracts&exchars=1000&titles=" <?php echo $form->textField($model,'LINK_CIUDAD',array('size'=>60,'maxlength'=>200)); ?>	
 	</div>
 
-	<div class="row">
-		
-		
+	<div class="row">	
 		<?php echo $form->labelEx($model,'COMM_CIUDAD'); ?>
 		<textarea  id="citycomm"  placeholder="Introduce tu comentario" class="span9" <?php echo $form->textField($model,'COMM_CIUDAD',array('size'=>60,'maxlength'=>300));?></textarea>
 		<?php echo $form->error($model,'COMM_CIUDAD'); ?>
@@ -45,7 +43,7 @@
 
 	<div class="row">
 		
-		<input id="pgid" <?php echo $form->textField($model,'PAGE_ID_CIUDAD',array('size'=>10,'maxlength'=>10)); ?>
+		<input type="HIDDEN" id="pgid" <?php echo $form->textField($model,'PAGE_ID_CIUDAD',array('size'=>10,'maxlength'=>10)); ?>
 		
 	</div>
 
