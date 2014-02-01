@@ -51,11 +51,9 @@ class VisitaController extends Controller
 	 */
 	public function actionView($id)
 	{
-		//$ultima_ciudad = Ciudad::model()->findBySql('select * from ciudad order by ID_CIUDAD desc');
 		$ultima_visita = Visita::model()->findByPk($id);
 		$ultima_ciudad = Ciudad::model()->findByPk($ultima_visita->ID_CIUDAD);
 		$amigos_visita = VisitaAmigo::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
-		//$comentarios = Comentario::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
 		$comentarios = Comentario::model()->findAllBySql('select * from comentario where ID_VISITA='.$ultima_visita->ID_VISITA.' order by FECHA_COMENTARIO desc');
 		
 		$amigos = Amigo::model()->findAllBySql('select * from amigo order by ID_AMIGO asc');
@@ -189,7 +187,6 @@ class VisitaController extends Controller
 		$ultima_ciudad = Ciudad::model()->findBySql('select * from ciudad order by ID_CIUDAD desc');
 		$ultima_visita = Visita::model()->findBySql('select * from visita where ID_CIUDAD='.$ultima_ciudad->ID_CIUDAD.' order by FECHA_VISITA desc');
 		$amigos_visita = VisitaAmigo::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
-		//$comentarios = Comentario::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
 		$comentarios = Comentario::model()->findAllBySql('select * from comentario where ID_VISITA='.$ultima_visita->ID_VISITA.' order by FECHA_COMENTARIO desc');
 		
 		$amigos = Amigo::model()->findAllBySql('select * from amigo order by ID_AMIGO asc');
@@ -202,6 +199,16 @@ class VisitaController extends Controller
 			'amigos'=>$amigos
 			));
 	}
+	
+	public function nombre_a_id($nombre_amigo){
+		$amigo = Amigo::model()->find('NOMBRE_AMIGO='.$nombre_amigo);
+		return $amigo->ID_AMIGO;
+	}
+	 
+	public function id_a_nombre($id_amigo){
+		$amigo = Amigo::model()->findByPk($id_amigo);
+		return $amigo->NOM_AMIGO;
+	}	
 	
 	public function nombre_a_id($nombre_amigo){
 		$amigo = Amigo::model()->find('NOMBRE_AMIGO='.$nombre_amigo);
