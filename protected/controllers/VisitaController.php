@@ -60,6 +60,37 @@ class VisitaController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
+	 
+	public function nombre_a_id($nombre_amigo){
+		$amigo = Amigo::model()->find('NOMBRE_AMIGO='.$nombre_amigo);
+		return $amigo->ID_AMIGO;
+	}
+	 
+	public function id_a_nombre($id_amigo){
+		$amigo = Amigo::model()->findByPk($id_amigo);
+		return $amigo->NOM_AMIGO;
+	}	
+	
+	public function actionIndex()
+	{
+		$ultima_ciudad = Ciudad::model()->findBySql('select * from ciudad order by ID_CIUDAD desc');
+		$ultima_visita = Visita::model()->findBySql('select * from visita where ID_CIUDAD='.$ultima_ciudad->ID_CIUDAD.' order by FECHA_VISITA desc');
+		$amigos_visita = VisitaAmigo::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
+		//$comentarios = Comentario::model()->findAll('ID_VISITA='.$ultima_visita->ID_VISITA);
+		$comentarios = Comentario::model()->findAllBySql('select * from comentario where ID_VISITA='.$ultima_visita->ID_VISITA.' order by FECHA_COMENTARIO desc');
+		
+		$amigos = Amigo::model()->findAllBySql('select * from amigo order by ID_AMIGO asc');
+		
+		$this->render('index',array(
+			'ultima_visita'=>$ultima_visita,
+			'ultima_ciudad'=>$ultima_ciudad,
+			'amigos_visita'=>$amigos_visita,
+			'comentarios'=>$comentarios,
+			'amigos'=>$amigos
+			));
+	}
+	
+	/*
 	public function actionCreate()
 	{
 		$model=new Visita;
@@ -78,6 +109,7 @@ class VisitaController extends Controller
 			'model'=>$model,
 		));
 	}
+	*/
 	
 	public function actionMegusta($id)
 	{
