@@ -59,6 +59,7 @@ class ComentarioController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
+	 
 	public function actionCreate()
 	{
 		$id_amigo = $_POST['id_amigo'];
@@ -89,9 +90,12 @@ class ComentarioController extends Controller
 		//$com_likes = $comentario->COM_LIKEs;
 		$respuesta['COM_LIKEs'] = $comentario->COM_LIKEs;
 		
-		echo json_encode($respuesta);
-/*		
+		echo json_encode($respuesta);	 
+	/*
+	public function actionCreate()
+	{
 		$model=new Comentario;
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -104,9 +108,15 @@ class ComentarioController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
-		));*/
+		));
 	}
-	
+	*/
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	 
 	public function actionMegusta()
 	{
 		$id_comentario = $_POST['id_comentario'];		
@@ -119,12 +129,8 @@ class ComentarioController extends Controller
 		$respuesta['ID_COMENTARIO']= $comentario->ID_COMENTARIO;
 		$respuesta['COM_LIKEs']= $comentario->COM_LIKEs;
 		echo json_encode($respuesta);
-	}
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+	} 
+	
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
@@ -195,6 +201,7 @@ class ComentarioController extends Controller
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
 	 */
+	 }
 	public function loadModel($id)
 	{
 		$model=Comentario::model()->findByPk($id);
