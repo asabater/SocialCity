@@ -25,51 +25,27 @@ $model2=new Ciudad();
 	function getDesc(city) {
 		$(".search-form").show();
 		$.ajax({
-		url : "http://es.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=1000&titles=" + city,
-		type : 'GET',
-		crossDomain : true,
-		dataType : 'jsonp',
-		success : function(data, textStatus, jqXHR) {
-			jQuery.throughObject(data);
-		},
-
-		// success : function(wikiCity) {
-
-		// console.log(obj);
-		// alert(w);
-
-		// $(w.Attributes).each(function(index, element){
-		// alert(element.Value);
-		// })
-		// },
-		error : function() {
-			// alert('Failed!');
-		}
-		// beforeSend : setHeader
+			url : "http://es.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=1000&titles=" + city,
+			type : 'GET',
+			crossDomain : true,
+			dataType : 'jsonp',
+			success : function(data, textStatus, jqXHR) {
+				jQuery.throughObject(data);
+			},
+			error : 
+				console.log("Fallo al recuperar info de la wiki en la vista de ciudad")
 		});
-		
+
 		$.ajax({
-		url : <?php echo Yii::app()->request->baseUrl; ?>'/add2session.php?id=' + eval($('#Ciudad_ID_CIUDAD').val()),
-		type : 'GET',
-		crossDomain : true,
-		dataType : 'jsonp',
-		success : function(data, textStatus, jqXHR) {
+		  url : '<?php echo Yii::app()->request->baseUrl; ?>/add2session.php',
+		  type: 'GET',
+		  async: true,
+		  dataType : 'jsonp',
+		  data: 'id='+$('#Ciudad_ID_CIUDAD').val(),
+	      error : alert('Failed!'),		  
+		  success: function(data, textStatus, jqXHR) {
 			jQuery.throughObject(data);
-		},
-
-		// success : function(wikiCity) {
-
-		// console.log(obj);
-		// alert(w);
-
-		// $(w.Attributes).each(function(index, element){
-		// alert(element.Value);
-		// })
-		// },
-		error : function() {
-			// alert('Failed!');
-		}
-		// beforeSend : setHeader
+		  }
 		});
 	}
 </script>
@@ -78,7 +54,7 @@ $model2=new Ciudad();
 	'id'=>'form'
 )); ?>
 <?php 
-// echo $form->textField($model2,'ID_CIUDAD');
+echo $form->hiddenField($model2,'ID_CIUDAD');
 
 $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	// 'model'=>$model,
