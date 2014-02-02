@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'visita':
  * @property integer $ID_VISITA
+ * @property string $DESC_VISITA
  * @property string $FECHA_VISITA
  * @property integer $LIKE_VISITA
  * @property integer $ID_CIUDAD
@@ -34,10 +35,11 @@ class Visita extends CActiveRecord
 		return array(
 			array('ID_CIUDAD', 'required'),
 			array('LIKE_VISITA, ID_CIUDAD', 'numerical', 'integerOnly'=>true),
+			array('DESC_VISITA', 'length', 'max'=>250),
 			array('FECHA_VISITA', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ID_VISITA, FECHA_VISITA, LIKE_VISITA, ID_CIUDAD', 'safe', 'on'=>'search'),
+			array('ID_VISITA, DESC_VISITA, FECHA_VISITA, LIKE_VISITA, ID_CIUDAD', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +64,7 @@ class Visita extends CActiveRecord
 	{
 		return array(
 			'ID_VISITA' => 'Id Visita',
+			'DESC_VISITA' => 'Desc Visita',
 			'FECHA_VISITA' => 'Fecha Visita',
 			'LIKE_VISITA' => 'Like Visita',
 			'ID_CIUDAD' => 'Id Ciudad',
@@ -87,6 +90,7 @@ class Visita extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('ID_VISITA',$this->ID_VISITA);
+		$criteria->compare('DESC_VISITA',$this->DESC_VISITA,true);
 		$criteria->compare('FECHA_VISITA',$this->FECHA_VISITA,true);
 		$criteria->compare('LIKE_VISITA',$this->LIKE_VISITA);
 		$criteria->compare('ID_CIUDAD',$this->ID_CIUDAD);
