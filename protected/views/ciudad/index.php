@@ -42,7 +42,7 @@ $model2=new Ciudad();
 		  async: true,
 		  dataType : 'jsonp',
 		  data: 'id='+$('#Ciudad_ID_CIUDAD').val(),
-	      error : alert('Failed!'),		  
+	      error : console.log('Failed!'),		  
 		  success: function(data, textStatus, jqXHR) {
 			jQuery.throughObject(data);
 		  }
