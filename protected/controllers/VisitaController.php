@@ -101,6 +101,7 @@ class VisitaController extends Controller
 	
 		$vis->LIKE_VISITA += 1;
 		$vis->save();
+		echo json_encode($vis->LIKE_VISITA);
 		//$this->render('view', array('post' => $post));
 		Yii::app()->end();
 	}
