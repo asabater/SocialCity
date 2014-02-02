@@ -1,7 +1,7 @@
 <?php
 /* @var $this AmigoController */
 /* @var $model Amigo */
-
+echo "hola";
 $this->breadcrumbs=array(
 	'Amigos'=>array('index'),
 	'Create',
@@ -16,3 +16,4 @@ $this->menu=array(
 <h1>Create Amigo</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+
