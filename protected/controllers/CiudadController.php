@@ -80,6 +80,7 @@ class CiudadController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		//$this->performAjaxValidation($model);
+		echo "Ciudad";
 		if(isset($_POST['Ciudad']))
 		{
 			$model->attributes=$_POST['Ciudad'];
