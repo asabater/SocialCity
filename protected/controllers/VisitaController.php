@@ -78,13 +78,13 @@ class VisitaController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Visita']))
-		{
+		if(isset($_POST['Visita'])){
 			$model->attributes=$_POST['Visita'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->ID_VISITA));
 		}
 
+		if(isset($_POST['FECHA_VISITA']&&
 		$this->render('create',array(
 			'model'=>$model,
 		));
