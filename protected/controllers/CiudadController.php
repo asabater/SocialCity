@@ -124,10 +124,38 @@ class CiudadController extends Controller
 	 */
 	public function actionIndex()
 	{
+		
+		$models = amigo::model()->findAll(array('order' => 'NOM_AMIGO'));
+		$list = CHtml::listData($models, 'ID_AMIGO', 'NOM_AMIGO');
+		
+		//Construcción del array de amigos necesario para el multidropdown
+		$criteria=new CDbCriteria;
+		$criteria->alias = "amigos";
+		//$criteria->condition = "NOM_AMIGO like '" . $_GET['term'] . "%'";
+
+		$dataProvider = new CActiveDataProvider(get_class(Amigo::model()), array(
+				'criteria'=>$criteria,'pagination'=>false,
+		));
+		$amigos = $dataProvider->getData();
+
+		$return_array = array();
+		foreach($amigos as $amigo) {
+			$return_array[] = array(
+					'label'=>$amigo["NOM_AMIGO"],
+					//'value'=>$amigo["NOM_AMIGO"],
+					'id'=>$amigo["ID_AMIGO"],
+			);
+		}
+		$amigosJson = CJSON::encode($return_array);
+		
+		
 		$dataProvider=new CActiveDataProvider('Ciudad');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+			'amigos'=>$list
 		));
+		
+
 	}
 
 	/**

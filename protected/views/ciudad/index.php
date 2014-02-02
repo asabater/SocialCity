@@ -5,10 +5,11 @@
 $this -> breadcrumbs = array('Ciudades', );
 
 // $this -> menu = array( array('label' => 'Create Ciudad', 'url' => array('create')), array('label' => 'Manage Ciudad', 'url' => array('admin')), );
-$model2=new Ciudad();
-
+$modelCiudad=new Ciudad();
+$modelVisita=new Visita();
+$modelAmigo=new Amigo();
 ?>
-
+<?php //var_dump($amigos);?>
 <script>
 	jQuery.throughObject = function(obj) {
 		for (var attr in obj) {
@@ -54,7 +55,6 @@ $model2=new Ciudad();
 	'id'=>'form'
 )); ?>
 <?php 
-echo $form->hiddenField($model2,'ID_CIUDAD');
 
 $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	// 'model'=>$model,
@@ -112,7 +112,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	'id'=>'amigo-grid',
 	'ajaxUpdate' => 'true',
 	'template'=>'{items}',
-	'dataProvider'=>$model2->buscaComentariosCiudad(),
+	'dataProvider'=>$modelCiudad->buscaComentariosCiudad(),
 	'columns'=>array(
 		array(
 		'name'=>'Fecha de la visita',
@@ -161,3 +161,56 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 ));
  ?>
 </div>	
+
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+	'id'=>'form'
+)); ?>
+
+<?php echo $form->hiddenField($modelCiudad,'ID_CIUDAD'); ?>
+
+<?php 
+$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+    'name'=>'FECHA_VISITA',
+    // additional javascript options for the date picker plugin
+    'options'=>array(
+        'showAnim'=>'fold',
+    ),
+    'language'=>'es',
+    'htmlOptions'=>array(
+        'style'=>'height:20px;'
+    ),
+));
+?>
+<?php echo $form->textArea($modelVisita,'DESC_VISITA',array('rows'=>6, 'cols'=>50)); ?>
+<?php ?>
+<?php echo $form->dropDownList($modelAmigo, 'ID_AMIGO',$amigos, array('multiple' => true)); ?>
+<?php $this->widget('bootstrap.widgets.TbButton', array(
+				'id'=>'creaVisita',
+				'buttonType'=>'ajaxSubmit',
+				'type'=>'primary',
+				'icon'=>'icon-plus-sign',
+				'url'=>$this -> createUrl('visita/create'),
+				'label'=>'Agrega visita',
+				'ajaxOptions' => array(
+						'type'=>'POST',
+						'dataType'=>'json',
+						'success'=>'function(data) {
+							if(data.status=="success"){
+							 $(".alert-success").show();
+                 			 $(".alert-success") .html("<strong>"+data.amigo+"</strong>" + " ha sido dado de alta correctamente");
+                 			 $("#agregaAmigo")[0].reset();
+							 $(".alert-success").fadeOut(4000);
+                			}
+                 			else{
+               				 $.each(data, function(key, val) {
+                			 $(".alert-error").html(val);                                                    
+                			 $(".alert-error").show();
+							 $( "#Amigo_NOM_AMIGO" ).focus(function() {
+								$(".alert-error").hide("slow");
+								});
+                			});
+                			}       
+                		}',
+				)));
+?>
+<?php $this->endWidget(); ?>
