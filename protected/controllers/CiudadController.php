@@ -76,7 +76,7 @@ class CiudadController extends Controller
 				//$this->redirect(array('view','id'=>$model->ID_CIUDAD));
 		}
 
-		$this->render('create',array(
+		$this->render('createciudad',array(
 			'model'=>$model,
 		));
 	}
