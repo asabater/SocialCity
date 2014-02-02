@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-01-2014 a las 21:52:27
+-- Tiempo de generación: 02-02-2014 a las 12:16:47
 -- Versión del servidor: 5.5.25
 -- Versión de PHP: 5.3.14
 
@@ -31,13 +31,15 @@ CREATE TABLE `amigo` (
   `NOM_AMIGO` varchar(50) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`ID_AMIGO`),
   UNIQUE KEY `NOM_AMIGO` (`NOM_AMIGO`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `amigo`
 --
 
 INSERT INTO `amigo` (`ID_AMIGO`, `NOM_AMIGO`) VALUES
+(3, 'Jaime'),
+(4, 'Joan'),
 (2, 'Juan'),
 (1, 'Pedro');
 
@@ -78,7 +80,7 @@ CREATE TABLE `comentario` (
   `COM_TEXT` varchar(250) CHARACTER SET utf8 NOT NULL,
   `ID_AMIGO` int(9) NOT NULL,
   `ID_VISITA` int(9) NOT NULL,
-  `FECHA_COMENTARIO` datetime DEFAULT NULL,
+  `FECHA_COMENTARIO` date DEFAULT NULL,
   `COM_LIKEs` int(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID_COMENTARIO`),
   KEY `ID_AMIGO` (`ID_AMIGO`),
@@ -90,8 +92,8 @@ CREATE TABLE `comentario` (
 --
 
 INSERT INTO `comentario` (`ID_COMENTARIO`, `COM_TEXT`, `ID_AMIGO`, `ID_VISITA`, `FECHA_COMENTARIO`, `COM_LIKEs`) VALUES
-(1, 'Vaya rollo de ciudad', 2, 1, '2014-01-21', 0),
-(2, 'No saben tirar cañas en esta ciudad', 1, 1, NULL, 0);
+(1, 'Vaya rollo de ciudad', 2, 1, '2014-01-21', 8),
+(2, 'No saben tirar cañas en esta ciudad', 1, 2, '2014-02-20', 99);
 
 -- --------------------------------------------------------
 
@@ -101,6 +103,7 @@ INSERT INTO `comentario` (`ID_COMENTARIO`, `COM_TEXT`, `ID_AMIGO`, `ID_VISITA`, 
 
 CREATE TABLE `visita` (
   `ID_VISITA` int(9) NOT NULL AUTO_INCREMENT,
+  `DESC_TEXT` varchar(250) COLLATE utf8_bin DEFAULT NULL,
   `FECHA_VISITA` date DEFAULT NULL,
   `LIKE_VISITA` int(5) DEFAULT '0',
   `ID_CIUDAD` int(9) NOT NULL,
@@ -112,9 +115,9 @@ CREATE TABLE `visita` (
 -- Volcado de datos para la tabla `visita`
 --
 
-INSERT INTO `visita` (`ID_VISITA`, `FECHA_VISITA`, `LIKE_VISITA`, `ID_CIUDAD`) VALUES
-(1, '2014-01-12', 1, 1),
-(2, '2014-01-05', 4, 2);
+INSERT INTO `visita` (`ID_VISITA`, `DESC_TEXT`, `FECHA_VISITA`, `LIKE_VISITA`, `ID_CIUDAD`) VALUES
+(1, NULL, '2014-01-12', 14, 1),
+(2, NULL, '2014-01-05', 11, 3);
 
 -- --------------------------------------------------------
 
@@ -122,11 +125,7 @@ INSERT INTO `visita` (`ID_VISITA`, `FECHA_VISITA`, `LIKE_VISITA`, `ID_CIUDAD`) V
 -- Estructura de tabla para la tabla `visita_amigo`
 --
 
-<<<<<<< HEAD
-CREATE TABLE IF NOT EXISTS `visita_amigo` (
-=======
 CREATE TABLE `visita_amigo` (
->>>>>>> 74e9c94108e76f22fa5ac5b6a66736816936a527
   `ID_VISITA_AMIGO` int(9) NOT NULL AUTO_INCREMENT,
   `ID_VISITA` int(9) NOT NULL,
   `ID_AMIGO` int(9) NOT NULL,
