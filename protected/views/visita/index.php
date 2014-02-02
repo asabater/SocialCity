@@ -62,7 +62,6 @@ $(document).ready(function(){
 				$("#alerta").text('Selecciona quién eres');
 				$("#alerta").show(500);
 			}else 	if ($("#com_text").val().length == 0 ){
-						//$("#comentarios").prepend('<p id=\"alerta1\">Escribe tu comentario</p>');
 						$("#alerta").text('Escribe un comentario');
 						$("#alerta").show(500);
 					}
