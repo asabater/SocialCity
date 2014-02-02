@@ -101,6 +101,7 @@ class VisitaController extends Controller
 	
 		$vis->LIKE_VISITA += 1;
 		$vis->save();
+		echo json_encode($vis->LIKE_VISITA);
 		//$this->render('view', array('post' => $post));
 		Yii::app()->end();
 	}
@@ -182,6 +183,17 @@ class VisitaController extends Controller
 	/**
 	 * Lists all models.
 	 */
+	 
+	public function nombre_a_id($nombre_amigo){
+		$amigo = Amigo::model()->find('NOMBRE_AMIGO='.$nombre_amigo);
+		return $amigo->ID_AMIGO;
+	}
+	 
+	public function id_a_nombre($id_amigo){
+		$amigo = Amigo::model()->findByPk($id_amigo);
+		return $amigo->NOM_AMIGO;
+	}	
+ 
 	public function actionIndex()
 	{
 		$ultima_ciudad = Ciudad::model()->findBySql('select * from ciudad order by ID_CIUDAD desc');
