@@ -32,7 +32,7 @@ class CiudadController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','createciudad'),
 				'users'=>array('*'),
 				
 			),
@@ -50,10 +50,11 @@ class CiudadController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($nom)
 	{
+	
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel($nom),
 		));
 	}
 
@@ -61,34 +62,56 @@ class CiudadController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreateciudad()
 	{
 		$model=new Ciudad;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Ciudad']))
-		{
-			$model->attributes=$_POST['Ciudad'];
-			$model->save();
-			//if($model->save())
-				//$this->redirect(array('view','id'=>$model->ID_CIUDAD));
-		}
-
 		$this->render('createciudad',array(
 			'model'=>$model,
 		));
 	}
+	
+	public function actionCreate()
+	{
+		$model=new Ciudad;
+
+		// Uncomment the following line if AJAX validation is needed
+		//$this->performAjaxValidation($model);
+		if(isset($_POST['Ciudad']))
+		{
+			$model->attributes=$_POST['Ciudad'];
+			
+			$valid=$model->validate();
+			if($valid){
+				$model->save();
+				echo CJSON::encode(array(
+						'status'=>'success',
+						'Ciudad'=>$model->NOM_CIUDAD
+				));
+				Yii::app()->end();
+			}
+			else{
+				echo "no valido";
+				$error = CActiveForm::validate($model);
+				if($error!='[]')
+					echo CJON::encode($error);
+				Yii::app()->end();
+			}
+		}
+	}
+	
 
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($nom)
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadModel($nom);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -97,7 +120,7 @@ class CiudadController extends Controller
 		{
 			$model->attributes=$_POST['Ciudad'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->ID_CIUDAD));
+				$this->redirect(array('view','nom'=>$model->NOM_CIUDAD));
 		}
 
 		$this->render('update',array(
@@ -110,9 +133,9 @@ class CiudadController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete($nom)
 	{
-		$this->loadModel($id)->delete();
+		$this->loadModel($nom)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -180,9 +203,9 @@ class CiudadController extends Controller
 	 * @return Ciudad the loaded model
 	 * @throws CHttpException
 	 */
-	public function loadModel($id)
+	public function loadModel($nom)
 	{
-		$model=Ciudad::model()->findByPk($id);
+		$model=Ciudad::model()->findByPk($nom);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -217,7 +240,7 @@ class CiudadController extends Controller
 				$return_array[] = array(
 						'label'=>$ciudad["NOM_CIUDAD"],
 						'value'=>$ciudad["NOM_CIUDAD"],
-						'id'=>$ciudad["ID_CIUDAD"],
+						'nom'=>$ciudad["_CIUDAD"],
 				);
 			}
 			echo CJSON::encode($return_array);
