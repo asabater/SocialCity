@@ -98,7 +98,7 @@ class CiudadController extends Controller
 				echo "no valido";
 				$error = CActiveForm::validate($model);
 				if($error!='[]')
-					echo CJON::encode($error);
+					echo CJSON::encode($error);
 				Yii::app()->end();
 			}
 		}
