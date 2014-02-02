@@ -49,7 +49,7 @@ if ($ultima_ciudad!=NULL){
 							function(data,status){
 								$("#comentarios").prepend('<br/>'+data['NOM_AMIGO']+': '+nl2br(data['COM_TEXT'])+
 								'<br/>'+data['FECHA_COMENTARIO']+ 
-								'<button style=\"background-color:white; border:none; outline-color:white;\" class=\"like_btn\" data-id=\"'+
+								' <button style=\"background-color:white; border:none; outline-color:white;\" class=\"like_btn\" data-id=\"'+
 								data['ID_COMENTARIO']+'\"><img src=\"images/like2_.png\"/></button>'+
 								'<span id=\"com_'+data['ID_COMENTARIO']+'\">0 likes<br/><br/></span>');
 							},'json');
