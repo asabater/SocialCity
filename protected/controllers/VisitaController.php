@@ -81,7 +81,8 @@ class VisitaController extends Controller
 		if(isset($_POST['Visita'])){
 			$model->attributes=$_POST['Visita'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->ID_VISITA));
+				null;
+				// $this->redirect(array('view','id'=>$model->ID_VISITA));
 		}
 		 	
 		$this->render('create',array(
