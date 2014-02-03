@@ -97,11 +97,11 @@ function showCustomer(str){
 			<span id="vis_<?php echo $ultima_visita->ID_VISITA;?>"><?php echo $ultima_visita->LIKE_VISITA . ' likes';?></span>
 </h1> 
 		<?php
-		echo 'Por';
 		if ($amigos_visita!=NULL){
 ?>
 <h5>
 <?php
+		echo 'Con';
 		foreach($amigos_visita as $amigo):
 			if ($amigos_visita[0] != $amigo){
 				if (end($amigos_visita) != $amigo) echo ', ';
@@ -109,7 +109,7 @@ function showCustomer(str){
 			}else echo ' ';	
 			echo $this->id_a_nombre($amigo->ID_AMIGO);
 		endforeach;
-		}else echo ' nadie';
+		}else echo 'Sin amigos'
 		?>
 </h5>
 <h4><br/>Mis detalles personales y anotaciones sobre la ciudad<br/></h4>
