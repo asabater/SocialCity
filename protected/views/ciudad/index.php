@@ -199,7 +199,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 
 <?php 
 $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-    'name'=>'VisitaAmigo[FECHA_VISITA]',
+    'name'=>'Visita[FECHA_VISITA]',
     // 'model'=>$modelVisita,
     // additional javascript options for the date picker plugin
     'options'=>array(
