@@ -99,9 +99,9 @@ class Ciudad extends CActiveRecord {
 	public function buscaComentariosCiudad() {
 		// session_start(); 
 		// $id_ciudad = $_SESSION['id'];
-		// var_dump($_SESSION);
+		//var_dump($_SESSION);
 		
-		if(isset($_SESSION['id']) && (is_numeric($_SESSION['id']))){
+		if(isset($_SESSION['id'])){
 			$id = $_SESSION['id'];
 		} else {
 			$id = 0;
@@ -124,8 +124,11 @@ class Ciudad extends CActiveRecord {
 		$sql = Yii::app() -> db -> createCommand() -> select('*') -> from('visita_amigo') -> where($where, $params) -> text;
 		
 		$key = "ID_VISITA";
-		//SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_VISITA IN ($subSQL) GROUP BY ID_VISITA
-		$sql = "SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_CIUDAD = ".$id." GROUP BY ID_VISITA";
+		$sql = "SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES,
+				 LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 
+					INNER JOIN VISITA USING (ID_VISITA) 
+						INNER JOIN AMIGO USING (ID_AMIGO) 
+							INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_CIUDAD = ".$id." GROUP BY ID_VISITA";
 		// echo $sql;
 
 		return $dataProvider = new CSqlDataProvider($sql, array('params' => $params, 'keyField' => $key, 'pagination' => array('pageSize' => 10, ), ));

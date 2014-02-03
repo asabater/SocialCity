@@ -84,7 +84,6 @@ class VisitaController extends Controller
 				$this->redirect(array('view','id'=>$model->ID_VISITA));
 		}
 		 	
-	
 		$this->render('create',array(
 			'model'=>$model,
 		));

@@ -8,6 +8,19 @@ $this -> breadcrumbs = array('Ciudades', );
 $modelCiudad=new Ciudad();
 $modelVisita=new Visita();
 $modelAmigo=new Amigo();
+$modelVisitaAmigo= new VisitaAmigo();
+
+Yii::app()->clientScript->registerScript('search', "
+$('#form').submit(function(){
+	$('.search-form').show('slow');
+	//$('#amigo_id').text($(\"#Autocompleta_amigo\").val());
+	$('#amigo-grid').yiiGridView('update', {
+		data: $(this).serialize()
+	});
+	$('#VisitaAmigo_ID_AMIGO').val('');
+	return false;
+});
+");
 ?>
 <?php //var_dump($amigos);?>
 <script>
@@ -42,7 +55,7 @@ $modelAmigo=new Amigo();
 		  type: 'GET',
 		  async: true,
 		  dataType : 'jsonp',
-		  data: 'id='+$('#Ciudad_ID_CIUDAD').val(),
+		  data: 'id='+$('#Visita_ID_CIUDAD').val(),
 	      error : console.log('Failed!'),		  
 		  success: function(data, textStatus, jqXHR) {
 			jQuery.throughObject(data);
@@ -50,17 +63,21 @@ $modelAmigo=new Amigo();
 		});
 	}
 </script>
-
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'id'=>'form'
+	'id'=>'form',
+	'htmlOptions'=>array('class'=>'well'),
 )); ?>
+<legend>Buscador de ciudades</legend>
+	<fieldset>
+		<div class="input-append">
+
 <?php 
 
 $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	// 'model'=>$model,
 	'name' => 'Ciudades', 'id' => 'Ciudades_visitadas',
 	// 'value'=>"Introduce el nombre de la ciudad",
-	'htmlOptions' => array('class' => 'span9', 'placeholder' => 'Introduce el nombre de la ciudad', ), 
+	'htmlOptions' => array('class' => 'span7', 'placeholder' => 'Introduce el nombre de la ciudad', ), 
 	'options' => array('source' => 'js:function(query,process){
     		ciudades = [];
    			map = {};
@@ -80,7 +97,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
     		});
     	}', 'updater' => 'js:function (item) {
     		ciudadSeleccionada = map[item].id;
-			$(\'#Ciudad_ID_CIUDAD\').val(ciudadSeleccionada);
+			$(\'#Visita_ID_CIUDAD\').val(ciudadSeleccionada);
 			// Show information div
 			$("#CityInfo").css("display","inline-block");
 
@@ -91,7 +108,17 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 
     	}', 'items' => 4, ), ));
 ?> 
+<?php $this->widget('bootstrap.widgets.TbButton', array(
+	'buttonType'=>'submit',
+	'type'=>'primary',
+	'label'=>'Buscar',
+	'icon'=>'icon-search',
+	'htmlOptions'=>array('class'=>'search-button'),
+	));
+?>
 <?php $this->endWidget(); ?>
+</fieldset></div>
+
 <div id='CityInfo'>
 	<div id='CityTitle'></div>
 	<div id="LikeStats">
@@ -105,8 +132,6 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 <div class="search-form" style="display:none;">
 <h1 id="amigo_id"></h1>
 <?php 
-
-	
 	$this->widget('bootstrap.widgets.TbGridView', array(
 	'type'=>'striped bordered condensed',
 	'id'=>'amigo-grid',
@@ -160,17 +185,22 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	'emptyText' => 'Aún no hay comentarios',
 ));
  ?>
+
 </div>	
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'id'=>'form'
+	'id'=>'form',
+	'htmlOptions'=>array('class'=>'well'),
 )); ?>
-
-<?php echo $form->hiddenField($modelCiudad,'ID_CIUDAD'); ?>
+<legend>Alta nueva visita</legend>
+	<fieldset>
+		<div class="input-append">
+<?php echo $form->hiddenField($modelVisita,'ID_CIUDAD'); ?>
 
 <?php 
 $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-    'name'=>'FECHA_VISITA',
+    'name'=>'VisitaAmigo[FECHA_VISITA]',
+    // 'model'=>$modelVisita,
     // additional javascript options for the date picker plugin
     'options'=>array(
         'showAnim'=>'fold',
@@ -183,7 +213,7 @@ $this->widget('zii.widgets.jui.CJuiDatePicker',array(
 ?>
 <?php echo $form->textArea($modelVisita,'DESC_VISITA',array('rows'=>6, 'cols'=>50)); ?>
 <?php ?>
-<?php echo $form->dropDownList($modelAmigo, 'ID_AMIGO',$amigos, array('multiple' => true)); ?>
+<?php echo $form->dropDownList($modelVisitaAmigo, 'ID_AMIGO',$amigos, array('multiple' => true)); ?>
 <?php $this->widget('bootstrap.widgets.TbButton', array(
 				'id'=>'creaVisita',
 				'buttonType'=>'ajaxSubmit',
@@ -213,4 +243,5 @@ $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                 		}',
 				)));
 ?>
+</div></fieldset>
 <?php $this->endWidget(); ?>
