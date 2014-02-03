@@ -205,9 +205,11 @@ $this->widget('zii.widgets.jui.CJuiDatePicker',array(
     'options'=>array(
         'showAnim'=>'fold',
     ),
-    'language'=>'es',
+    'language'=>'us',
+    // 'dateFormat'=>'yy/mm/dd',
     'htmlOptions'=>array(
-        'style'=>'height:20px;'
+        'style'=>'height:20px;',
+        'dateFormat'=>'yy-mm-dd'
     ),
 ));
 ?>
