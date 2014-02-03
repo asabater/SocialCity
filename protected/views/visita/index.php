@@ -88,7 +88,7 @@ function showCustomer(str){
 }
 </script>
 		<?php
-			echo ' vistada por última vez el ';
+			echo ' vistada el ';
 			$fecha_visita = $ultima_visita->FECHA_VISITA;	
 			echo $fecha_visita = date('d-m-Y', strtotime($fecha_visita));
 		?>
