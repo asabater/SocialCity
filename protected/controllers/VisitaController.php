@@ -83,8 +83,8 @@ class VisitaController extends Controller
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->ID_VISITA));
 		}
-
-		if(isset($_POST['FECHA_VISITA']&&
+		 	
+	
 		$this->render('create',array(
 			'model'=>$model,
 		));

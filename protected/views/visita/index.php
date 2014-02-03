@@ -88,7 +88,7 @@ function showCustomer(str){
 }
 </script>
 		<?php
-			echo ' vistada por última vez el ';
+			echo ' vistada el ';
 			$fecha_visita = $ultima_visita->FECHA_VISITA;	
 			echo $fecha_visita = date('d-m-Y', strtotime($fecha_visita));
 		?>
@@ -101,14 +101,14 @@ function showCustomer(str){
 ?>
 <h5>
 <?php
-			echo 'Con';
-			foreach($amigos_visita as $amigo):
-				if ($amigos_visita[0] != $amigo){
-					if (end($amigos_visita) != $amigo) echo ', ';
-					else echo ' y ';
-				}else echo ' ';	
-				echo $this->id_a_nombre($amigo->ID_AMIGO);
-			endforeach;
+		echo 'Con';
+		foreach($amigos_visita as $amigo):
+			if ($amigos_visita[0] != $amigo){
+				if (end($amigos_visita) != $amigo) echo ', ';
+				else echo ' y ';
+			}else echo ' ';	
+			echo $this->id_a_nombre($amigo->ID_AMIGO);
+		endforeach;
 		}else echo 'Sin amigos'
 		?>
 </h5>
