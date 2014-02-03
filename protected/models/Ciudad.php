@@ -28,7 +28,16 @@ class Ciudad extends CActiveRecord {
 	public function rules() {
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array( array('NOM_CIUDAD, LINK_CIUDAD, COMM_CIUDAD, PAGE_ID_CIUDAD, LIKE_CIUDAD', 'required'), array('LIKE_CIUDAD', 'numerical', 'integerOnly' => true), array('NOM_CIUDAD', 'length', 'max' => 50), array('LINK_CIUDAD', 'length', 'max' => 200), array('COMM_CIUDAD', 'length', 'max' => 300), array('PAGE_ID_CIUDAD', 'length', 'max' => 10),
+	//	return array( array('NOM_CIUDAD, LINK_CIUDAD, COMM_CIUDAD, PAGE_ID_CIUDAD, LIKE_CIUDAD', 'required'), array('LIKE_CIUDAD', 'numerical', 'integerOnly' => true), array('NOM_CIUDAD', 'length', 'max' => 50), array('LINK_CIUDAD', 'length', 'max' => 200), array('COMM_CIUDAD', 'length', 'max' => 300), array('PAGE_ID_CIUDAD', 'length', 'max' => 10),
+		return array( 
+			array('COMM_CIUDAD', 'length', 'max' => 300), 
+			array('NOM_CIUDAD', 'required', 'message'=>'<strong>¡Error!</strong>: El nombre de la ciudad no puede estar vacío'),
+			array('NOM_CIUDAD', 'length', 'max'=>50),
+			array('NOM_CIUDAD', 'unique', 'message'=>'<strong>{value}</strong> ya existe en el sistema'),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('ID_CIUDAD, NOM_AMIGO', 'safe', 'on'=>'search'),
+		
 		// The following rule is used by search().
 		// @todo Please remove those attributes that should not be searched.
 		array('ID_CIUDAD, NOM_CIUDAD, LINK_CIUDAD, COMM_CIUDAD, PAGE_ID_CIUDAD, LIKE_CIUDAD', 'safe', 'on' => 'search'), );
@@ -117,13 +126,7 @@ class Ciudad extends CActiveRecord {
 		$key = "ID_VISITA";
 		//SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_VISITA IN ($subSQL) GROUP BY ID_VISITA
 		$sql = "SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES, LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 INNER JOIN VISITA USING (ID_VISITA) INNER JOIN AMIGO USING (ID_AMIGO) INNER JOIN COMENTARIO USING (ID_VISITA) WHERE ID_CIUDAD = ".$id." GROUP BY ID_VISITA";
-		// echo "session:".$_SESSION["id"];
-		// echo($sql);
-		// SELECT *
-		// FROM VISITA V, VISITA_AMIGO VA, CIUDAD C
-		// WHERE V.ID_CIUDAD = C.ID_CIUDAD
-		// AND C.ID_CIUDAD =1
-		// GROUP BY V.ID_VISITA
+		// echo $sql;
 
 		return $dataProvider = new CSqlDataProvider($sql, array('params' => $params, 'keyField' => $key, 'pagination' => array('pageSize' => 10, ), ));
 	}
