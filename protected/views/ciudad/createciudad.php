@@ -23,16 +23,19 @@ $addform=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <legend>Agregar Ciudad</legend>
 <?php echo $addform->errorSummary($model); ?>
-	<input id="Ciudad" class="span4" type="text"  <?php echo $addform->textField($model,'NOM_CIUDAD',array('size'=>50,'maxlength'=>50,'placeholder' => 'Introduce una ciudad',)); ?>
+
+<?php echo $addform->textField($model,'NOM_CIUDAD',array('id'=>"Ciudad",'class'=>'span4','size'=>50,'maxlength'=>50,'placeholder' => 'Introduce una ciudad',)); ?>
 	<legend></legend>
 	<div class="alert in alert-block alert-success" style="display:none"></div>
 	<div class="row-user-single">
+	
+<?php echo $addform->hiddenField($model,'LINK_CIUDAD',array('value'=>"es.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=1000&titles=",)); ?>
+ 
+<?php echo $addform->hiddenField($model,'LIKE_CIUDAD',array('value'=>'0',)); ?>
+
+<?php echo $addform->hiddenField($model,'PAGE_ID_CIUDAD',array('value'=>"1000",)); ?>
 
 <?php echo $addform->textArea($model,'COMM_CIUDAD',array('class'=>'span4','size'=>50,'maxlength'=>50,'placeholder' => 'Introduce un comentario',)); ?>
-	
-	<input type="hidden" value="es.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=1000&titles=" <?php echo $addform->textField($model,'LINK_CIUDAD'); ?>
-	<input type="hidden" value="0" <?php echo $addform->textField($model,'LIKE_CIUDAD'); ?>
-	<input type="hidden" value="1000" <?php echo $addform->textField($model,'PAGE_ID_CIUDAD'); ?>
 
 <?php $this->widget('bootstrap.widgets.TbButton', array(
 			'id'=>'NOM_CIUDAD',
@@ -50,6 +53,7 @@ $addform=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         $(".alert-success").html("<strong>"+data.Ciudad+"</strong>" + " ha sido dado de alta correctamente");
                         $("#agregaCiudad")[0].reset();
 						$(".alert-success").fadeOut(4000);
+						
                     }
                     else{
                      	$.each(data, function(key, val) {
@@ -90,13 +94,30 @@ $addform=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             $(".alert-error").fadeOut(4000);
             }
            
-                response(data[1]);  
+                response(data[1]); 
+               // getDesc(request.term); 
            }
        });      
    }
        
 });
 
+/*	function getDesc(city) {
+		$(".alert-error").show();
+		$.ajax({
+			url : "http://es.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=1000&titles=" + city,
+			type : 'GET',
+			crossDomain : true,
+			dataType : 'json',
+			success : function(data, textStatus, jqXHR) {
+				jQuery.throughObject(data);
+			},
+			error : 
+				console.log("Fallo al recuperar info de la wiki en la vista de ciudad")
+		});
+
+		
+	}*/
 
 
 </script>
