@@ -77,12 +77,18 @@ class VisitaController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+	
 		if(isset($_POST['Visita'])){
 			$model->attributes=$_POST['Visita'];
 			if($model->save())
 				null;
 				// $this->redirect(array('view','id'=>$model->ID_VISITA));
+		}
+		
+
+		foreach ($_POST['VisitaAmigo']['ID_AMIGO'] as $item){
+			$sql = "insert into visita_amigo (id_visita, id_amigo) values (".$model->ID_VISITA.", ".$item.")";
+			Yii::app()->db->createCommand($sql)->query();
 		}
 		 	
 		$this->render('create',array(

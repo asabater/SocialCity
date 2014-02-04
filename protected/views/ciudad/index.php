@@ -205,7 +205,7 @@ $this->widget('zii.widgets.jui.CJuiDatePicker',array(
     'options'=>array(
         'showAnim'=>'fold',
     ),
-    'language'=>'us',
+    'language'=>'en',
     // 'dateFormat'=>'yy/mm/dd',
     'htmlOptions'=>array(
         'style'=>'height:20px;',
