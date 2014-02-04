@@ -32,6 +32,8 @@ class Ciudad extends CActiveRecord {
 		return array( 
 			array('COMM_CIUDAD', 'length', 'max' => 300), 
 			array('NOM_CIUDAD', 'required', 'message'=>'<strong>¡Error!</strong>: El nombre de la ciudad no puede estar vacío'),
+			array('LINK_CIUDAD', 'required', 'message'=>'<strong>¡Error!</strong>: El Link no puede estar vacio'),
+			array('PAGE_ID_CIUDAD', 'required', 'message'=>'<strong>¡Error!</strong>: El id de la pagina no puede estar vacío'),
 			array('NOM_CIUDAD', 'length', 'max'=>50),
 			array('NOM_CIUDAD', 'unique', 'message'=>'<strong>{value}</strong> ya existe en el sistema'),
 			// The following rule is used by search().

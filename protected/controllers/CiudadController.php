@@ -80,7 +80,7 @@ class CiudadController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		//$this->performAjaxValidation($model);
-		echo "Ciudad";
+		
 		if(isset($_POST['Ciudad']))
 		{
 			$model->attributes=$_POST['Ciudad'];
@@ -89,16 +89,16 @@ class CiudadController extends Controller
 			if($valid){
 				$model->save();
 				echo CJSON::encode(array(
-						'status'=>'success',
-						'Ciudad'=>$model->NOM_CIUDAD
+					'status'=>'success',
+					'Ciudad'=>$model->NOM_CIUDAD
 				));
 				Yii::app()->end();
 			}
 			else{
-				echo "no valido";
+				
 				$error = CActiveForm::validate($model);
 				if($error!='[]')
-					echo CJSON::encode($error);
+					echo $error;
 				Yii::app()->end();
 			}
 		}
