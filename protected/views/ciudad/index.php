@@ -254,9 +254,8 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 							if(data.status=="success"){
 							 $(".alert-success").show();
                  			 $(".alert-success") .html("Visita ha sido dado de alta correctamente");
-                 			 $("#agregaAmigo")[0].reset();
+                 			 $("#agregaVisita")[0].reset();
 							 $(".alert-success").fadeOut(4000);
-							 alert("HOOOOOOOLA");
 							 // refresh your grid
 							 $.fn.yiiGridView.update("amigo-grid");
                 			} else{
