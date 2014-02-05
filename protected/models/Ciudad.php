@@ -126,7 +126,7 @@ class Ciudad extends CActiveRecord {
 		$sql = Yii::app() -> db -> createCommand() -> select('*') -> from('visita_amigo') -> where($where, $params) -> text;
 		
 		$key = "ID_VISITA";
-		$sql = "SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES,
+		$sql = "SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(DISTINCT NOM_AMIGO) AS ACOMPANYANTES,
 				 LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 
 					LEFT JOIN VISITA USING (ID_VISITA) 
 						LEFT JOIN AMIGO USING (ID_AMIGO) 
