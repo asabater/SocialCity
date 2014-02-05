@@ -80,22 +80,61 @@ class VisitaController extends Controller
 	
 		if(isset($_POST['Visita'])){
 			$model->attributes=$_POST['Visita'];
-			if($model->save())
-				null;
+			$valid=$model->validate();
+			if($valid){
+				$model->save();
 				// $this->redirect(array('view','id'=>$model->ID_VISITA));
+				echo CJSON::encode(array(
+						'status'=>'success',
+						'visita'=>$model->ID_VISITA
+				));		
+				foreach ($_POST['VisitaAmigo']['ID_AMIGO'] as $item){
+					$sql = "insert into visita_amigo (id_visita, id_amigo) values (".$model->ID_VISITA.", ".$item.")";
+					Yii::app()->db->createCommand($sql)->query();
+				}		
+			} else {
+				$error = CActiveForm::validate($model);
+				if($error!='[]')
+					echo $error;
+			}
 		}
-		
-
-		foreach ($_POST['VisitaAmigo']['ID_AMIGO'] as $item){
-			$sql = "insert into visita_amigo (id_visita, id_amigo) values (".$model->ID_VISITA.", ".$item.")";
-			Yii::app()->db->createCommand($sql)->query();
-		}
-		 	
-		$this->render('create',array(
-			'model'=>$model,
-		));
+		Yii::app()->end();
+		// $this->render('create',array(
+			// 'model'=>$model,
+		// ));
 	}
 	
+		/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	// public function actionCreate()
+	// {
+		// $model=new Amigo;
+// 
+		// // Uncomment the following line if AJAX validation is needed
+		// //$this->performAjaxValidation($model);
+// 
+		// if(isset($_POST['Amigo']))
+		// {
+			// $model->attributes=$_POST['Amigo'];
+			// $valid=$model->validate();
+			// if($valid){
+				// $model->save();
+				// echo CJSON::encode(array(
+						// 'status'=>'success',
+						// 'amigo'=>$model->NOM_AMIGO
+				// ));
+				// Yii::app()->end();
+			// }
+			// else{
+				// $error = CActiveForm::validate($model);
+				// if($error!='[]')
+					// echo $error;
+				// Yii::app()->end();
+			// }
+		// }
+	// }
 	public function actionMegusta($id)
 	{
 		$model=new Visita;

@@ -251,18 +251,15 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 						'type'=>'POST',
 						'dataType'=>'json',
 						'success'=>'function(data) {
-							alert("algo")
 							if(data.status=="success"){
 							 $(".alert-success").show();
-                 			 $(".alert-success") .html("<strong>"+data.amigo+"</strong>" + " ha sido dado de alta correctamente");
+                 			 $(".alert-success") .html("Visita ha sido dado de alta correctamente");
                  			 $("#agregaAmigo")[0].reset();
 							 $(".alert-success").fadeOut(4000);
 							 alert("HOOOOOOOLA");
 							 // refresh your grid
 							 $.fn.yiiGridView.update("amigo-grid");
-                			}
-                 			else{
-                 			 alert("puta fallo");
+                			} else{
                				 $.each(data, function(key, val) {
                 			 $(".alert-error").html(val);                                                    
                 			 $(".alert-error").show();
