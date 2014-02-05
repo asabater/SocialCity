@@ -203,6 +203,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	'id'=>'form',
 	'htmlOptions'=>array('class'=>'well'),
 )); ?>
+<div class="alert in alert-block alert-success" style="display:none"></div>
 <legend>Alta nueva visita</legend>
 	<fieldset>
 		<div class="input-append">
@@ -210,17 +211,18 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 
 <?php 
 $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+    'value'=>date('Y-m-d'),
     'name'=>'Visita[FECHA_VISITA]',
     // 'model'=>$modelVisita,
     // additional javascript options for the date picker plugin
     'options'=>array(
         'showAnim'=>'fold',
+        'dateFormat' => 'yy-mm-dd',
     ),
     'language'=>'en',
     // 'dateFormat'=>'yy/mm/dd',
     'htmlOptions'=>array(
         'style'=>'height:20px;',
-        'dateFormat'=>'yy-mm-dd'
     ),
 ));
 ?>
@@ -238,13 +240,18 @@ $this->widget('zii.widgets.jui.CJuiDatePicker',array(
 						'type'=>'POST',
 						'dataType'=>'json',
 						'success'=>'function(data) {
+							alert("algo")
 							if(data.status=="success"){
 							 $(".alert-success").show();
                  			 $(".alert-success") .html("<strong>"+data.amigo+"</strong>" + " ha sido dado de alta correctamente");
                  			 $("#agregaAmigo")[0].reset();
 							 $(".alert-success").fadeOut(4000);
+							 alert("HOOOOOOOLA");
+							 // refresh your grid
+							 $.fn.yiiGridView.update("amigo-grid");
                 			}
                  			else{
+                 			 alert("puta fallo");
                				 $.each(data, function(key, val) {
                 			 $(".alert-error").html(val);                                                    
                 			 $(".alert-error").show();
@@ -254,6 +261,17 @@ $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                 			});
                 			}       
                 		}',
+						'click'=>"function(){
+		    				$.fn.yiiGridView.update('amigo-grid', {
+		       					type:'POST',
+		        				url:$(this).attr('href'),
+		        				success:function(data) {
+		              				$.fn.yiiGridView.update('amigo-grid');
+		        				}
+		    				})
+		    				return false;
+		 				 }
+						",
 				)));
 ?>
 </div></fieldset>
