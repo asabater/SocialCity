@@ -175,6 +175,7 @@ class AmigoController extends Controller
 	public function actionIndex()
 	{
 		$model=new Amigo();
+		Yii::import('application.models.VisitaAmigo');
 		$model2 = new visitaAmigo('buscaVisitasAmigo');
 		$model2->unsetAttributes();  // clear any default values
 		
