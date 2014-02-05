@@ -38,8 +38,8 @@ $('#form').submit(function(){
 	}
 	function getDesc(city) {
 		$(".search-form").show();
-
-
+		$("#creadorVisita").show();
+	
 		$.ajax({
 			url : "http://es.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=1000&titles=" + city,
 			type : 'GET',
@@ -198,7 +198,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
  ?>
 
 </div>	
-
+<div id="creadorVisita">
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'form',
 	'htmlOptions'=>array('class'=>'well'),
@@ -236,7 +236,9 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
  'htmlOptions'=>array(
     'style'=>'height:20px;'),
  )); 
-?><br/>
+?>
+</div>
+<br/>
 <?php echo $form->textArea($modelVisita,'DESC_VISITA',array('rows'=>6, 'cols'=>50)); ?>
 <?php ?>
 <?php echo $form->dropDownList($modelVisitaAmigo, 'ID_AMIGO',$amigos, array('multiple' => true)); ?>
