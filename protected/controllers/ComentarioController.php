@@ -96,7 +96,7 @@ class ComentarioController extends Controller
 	 
 	public function actionMegusta()
 	{
-		$id_comentario = $_POST['id_comentario'];		
+		$id_comentario = $_GET['id_comentario'];		
 		$comentario = Comentario::model()->findByPk($id_comentario);
 		$com_likes = $comentario->COM_LIKEs;
 		

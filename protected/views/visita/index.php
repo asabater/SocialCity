@@ -19,7 +19,7 @@ function nl2br(str) {
 
 $(document).ready(function(){
 	$(".like_visita").click(function(){
-		$.get("/SocialCity/index.php?r=visita/megusta",
+		$.get("<?php echo Yii::app()->request->baseUrl; ?>/index.php?r=visita/megusta",
 		{
 			id : <?php echo $ultima_visita->ID_VISITA; ?>
 		},
@@ -30,7 +30,7 @@ $(document).ready(function(){
 	});
 	
 	$("p").on("click",".like_btn",function(){		
-		$.post("/SocialCity/index.php?r=comentario/megusta", 
+		$.get("<?php echo Yii::app()->request->baseUrl; ?>/index.php?r=comentario/megusta", 
 		{
 			id_comentario : $(this).data("id")
 		}, 
@@ -43,7 +43,7 @@ $(document).ready(function(){
 	$("#boton_enviar").click(function(){
 		$("#alerta").hide();
 		if ( $("#com_text").val().length > 0  &&  $("#com_id_amigo").val() != "" ){
-			$.post("/SocialCity/index.php?r=comentario/create",
+			$.post("<?php echo Yii::app()->request->baseUrl; ?>/index.php?r=comentario/create",
 			{
 				id_amigo : $("#com_id_amigo").val(),
 				com_text : $("#com_text").val(),
