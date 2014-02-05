@@ -176,7 +176,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 			'megusta' => array
           	(
             	'label' => 'Me gusta',
-            	'imageUrl' => Yii::app()->baseUrl.'/images/like2.png',
+            	'imageUrl' => Yii::app()->baseUrl.'/images/like2.PNG	',
 				'click'=>"function(){
     				$.fn.yiiGridView.update('amigo-grid', {
        					type:'POST',
