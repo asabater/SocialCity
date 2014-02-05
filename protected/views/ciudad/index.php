@@ -209,23 +209,34 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 		<div class="input-append">
 <?php echo $form->hiddenField($modelVisita,'ID_CIUDAD'); ?>
 
-<?php 
-$this->widget('zii.widgets.jui.CJuiDatePicker',array(
-    'value'=>date('Y-m-d'),
-    'name'=>'Visita[FECHA_VISITA]',
-    // 'model'=>$modelVisita,
-    // additional javascript options for the date picker plugin
-    'options'=>array(
-        'showAnim'=>'fold',
-        'dateFormat' => 'yy-mm-dd',
-    ),
-    'language'=>'en',
-    // 'dateFormat'=>'yy/mm/dd',
-    'htmlOptions'=>array(
-        'style'=>'height:20px;',
-    ),
-)); 
-?>
+<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+ 'name'=>'Visita[FECHA_VISITA]',
+ 'attribute'=>'fecha',
+ 'value'=>date('Y-m-d'),
+ 'language' => 'es',
+'htmlOptions'=>array(
+    'style'=>'height:20px;',
+),
+ 
+ 'options'=>array(
+ 'autoSize'=>true,
+ 'defaultDate'=>date('Y-m-d'),
+ 'dateFormat'=>'dd-mm-yy',
+ 'buttonImage'=>Yii::app()->baseUrl.'/images/calendar.png',
+ 'buttonImageOnly'=>true,
+ 'buttonText'=>'Fecha',
+ 'selectOtherMonths'=>true,
+ 'showAnim'=>'slide',
+ 'showButtonPanel'=>true,
+ 'showOn'=>'button',
+ 'showOtherMonths'=>true,
+ 'changeMonth' => 'true',
+ 'changeYear' => 'true',
+ ),
+ 'htmlOptions'=>array(
+    'style'=>'height:20px;'),
+ )); 
+?><br/>
 <?php echo $form->textArea($modelVisita,'DESC_VISITA',array('rows'=>6, 'cols'=>50)); ?>
 <?php ?>
 <?php echo $form->dropDownList($modelVisitaAmigo, 'ID_AMIGO',$amigos, array('multiple' => true)); ?>
