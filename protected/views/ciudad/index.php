@@ -38,6 +38,8 @@ $('#form').submit(function(){
 	}
 	function getDesc(city) {
 		$(".search-form").show();
+
+
 		$.ajax({
 			url : "http://es.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=1000&titles=" + city,
 			type : 'GET',
@@ -50,6 +52,8 @@ $('#form').submit(function(){
 				console.log("Fallo al recuperar info de la wiki en la vista de ciudad")
 		});
 
+	}
+	function saveSessionIdCiudad(){
 		$.ajax({
 		  url : '<?php echo Yii::app()->request->baseUrl; ?>/add2session.php',
 		  type: 'GET',
@@ -98,8 +102,15 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
     	}', 'updater' => 'js:function (item) {
     		ciudadSeleccionada = map[item].id;
 			$(\'#Visita_ID_CIUDAD\').val(ciudadSeleccionada);
+			saveSessionIdCiudad();
+			
+            // refresh your grid
+			$.fn.yiiGridView.update("amigo-grid");
+			
 			// Show information div
 			$("#CityInfo").css("display","inline-block");
+
+
 
 			$("#CityTitle").html("<h2>"+map[item].label+"</h2>");
 			$("#Counter").html(map[item].likes);
