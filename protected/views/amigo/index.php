@@ -95,7 +95,7 @@ $('#form').submit(function(){
 		array(
 		'name'=>'Fecha de la visita',
 		'type'=>'raw',
-		'value'=>'CHtml::link($data["FECHA_VISITA"], array ("visita/view", "id"=>$data["ID_VISITA"]))',
+		'value'=>'CHtml::link(date("d-m-Y",strtotime($data["FECHA_VISITA"])), array ("visita/view", "id"=>$data["ID_VISITA"]))',
 		),
 		array(
 		'name'=>'Visitante',
