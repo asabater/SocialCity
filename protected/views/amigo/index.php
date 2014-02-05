@@ -34,7 +34,7 @@ $('#form').submit(function(){
 				//$model2=new VisitaAmigo();
 				echo $form->hiddenField($model2,'ID_AMIGO');
 				//echo CHtml::hiddenField('valorseleccionado','');
-  				$this->widget('bootstrap.widgets.TbTypeAhead', array(
+  				$this->widget('bootstrap.widgets.TbTypeahead', array(
 				'model'=> $model,
   				'name'=> 'Autocompleta_amigo',
 				'attribute' => 'NOM_AMIGO',
