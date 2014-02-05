@@ -253,12 +253,10 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 						'success'=>'function(data) {
 							if(data.status=="success"){
 							 $(".alert-success").show();
-                 			 $(".alert-success") .html("Visita ha sido dado de alta correctamente");
-                 			 $("#agregaAmigo")[0].reset();
+                 			 $(".alert-success") .html("La visita ha sido dado de alta correctamente");
 							 $(".alert-success").fadeOut(4000);
-							 alert("HOOOOOOOLA");
 							 // refresh your grid
-							 $.fn.yiiGridView.update("amigo-grid");
+							 $("#amigo-grid").yiiGridView("update", {data: $(this).serialize()});
                 			} else{
                				 $.each(data, function(key, val) {
                 			 $(".alert-error").html(val);                                                    
@@ -269,17 +267,6 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
                 			});
                 			}       
                 		}',
-						'click'=>"function(){
-		    				$.fn.yiiGridView.update('amigo-grid', {
-		       					type:'POST',
-		        				url:$(this).attr('href'),
-		        				success:function(data) {
-		              				$.fn.yiiGridView.update('amigo-grid');
-		        				}
-		    				})
-		    				return false;
-		 				 }
-						",
 				)));
 ?>
 </div></fieldset>
