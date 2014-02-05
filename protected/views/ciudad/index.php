@@ -224,7 +224,7 @@ $this->widget('zii.widgets.jui.CJuiDatePicker',array(
     'htmlOptions'=>array(
         'style'=>'height:20px;',
     ),
-));
+)); 
 ?>
 <?php echo $form->textArea($modelVisita,'DESC_VISITA',array('rows'=>6, 'cols'=>50)); ?>
 <?php ?>
