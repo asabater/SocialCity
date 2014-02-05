@@ -127,10 +127,10 @@ class Ciudad extends CActiveRecord {
 		
 		$key = "ID_VISITA";
 		$sql = "SELECT ID_VISITA, FECHA_VISITA, GROUP_CONCAT(NOM_AMIGO) AS ACOMPANYANTES,
-				 LIKE_VISITA, COM_TEXT FROM VISITA_AMIGO T2 
-					LEFT JOIN VISITA USING (ID_VISITA) 
-						LEFT JOIN AMIGO USING (ID_AMIGO) 
-							LEFT JOIN COMENTARIO USING (ID_VISITA) WHERE ID_CIUDAD = ".$id." GROUP BY ID_VISITA";
+				 LIKE_VISITA, COM_TEXT FROM visita_amigo T2 
+					LEFT JOIN visita USING (ID_VISITA) 
+						LEFT JOIN amigo USING (ID_AMIGO) 
+							LEFT JOIN comentario USING (ID_VISITA) WHERE ID_CIUDAD = ".$id." GROUP BY ID_VISITA";
 		// echo $sql;
 
 		return $dataProvider = new CSqlDataProvider($sql, array('params' => $params, 'keyField' => $key, 'pagination' => array('pageSize' => 10, ), ));
