@@ -147,8 +147,7 @@ class CiudadController extends Controller
 	 * Lists all models.
 	 */
 	public function actionIndex()
-	{
-		
+	{		
 		$models = Amigo::model()->findAll(array('order' => 'NOM_AMIGO'));
 		$list = CHtml::listData($models, 'ID_AMIGO', 'NOM_AMIGO');
 		
