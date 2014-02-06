@@ -34,7 +34,7 @@ class AmigoController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('update'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
@@ -175,7 +175,7 @@ class AmigoController extends Controller
 	public function actionIndex()
 	{
 		$model=new Amigo();
-		$model2 = new visitaAmigo('buscaVisitasAmigo');
+		$model2 = new VisitaAmigo('buscaVisitasAmigo');
 		$model2->unsetAttributes();  // clear any default values
 		
 		if(isset($_GET['VisitaAmigo'])){

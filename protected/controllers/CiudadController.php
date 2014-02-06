@@ -149,7 +149,7 @@ class CiudadController extends Controller
 	public function actionIndex()
 	{
 		
-		$models = amigo::model()->findAll(array('order' => 'NOM_AMIGO'));
+		$models = Amigo::model()->findAll(array('order' => 'NOM_AMIGO'));
 		$list = CHtml::listData($models, 'ID_AMIGO', 'NOM_AMIGO');
 		
 		//Construcción del array de amigos necesario para el multidropdown
