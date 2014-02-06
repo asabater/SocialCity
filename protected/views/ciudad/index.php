@@ -231,7 +231,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
  'name'=>'Visita[FECHA_VISITA]',
  'attribute'=>'fecha',
- 'value'=>date('d-m-Y'),
+ // 'value'=>date('d-m-Y'),
  'language' => 'es',
 'htmlOptions'=>array(
     'style'=>'height:20px;',
@@ -239,7 +239,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
  
  'options'=>array(
  'autoSize'=>true,
- 'defaultDate'=>date('d-m-Y'),
+ // 'defaultDate'=>date('d-m-Y'),
  'dateFormat'=>'dd-mm-yy',
  'buttonImage'=>Yii::app()->baseUrl.'/images/calendar.png',
  'buttonImageOnly'=>true,

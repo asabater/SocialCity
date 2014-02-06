@@ -81,6 +81,8 @@ class VisitaController extends Controller
 		if(isset($_POST['Visita'])){
 			$model->attributes=$_POST['Visita'];
 			$valid=$model->validate();
+			$model->FECHA_VISITA = date('Y-m-d H:i:s', strtotime($model->FECHA_VISITA));
+			
 			if($valid){
 				$model->save();
 				// $this->redirect(array('view','id'=>$model->ID_VISITA));
