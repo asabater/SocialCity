@@ -24,6 +24,23 @@ $('#form').submit(function(){
 ?>
 <?php //var_dump($amigos);?>
 <script>
+	function actualizaLikes(num){
+		$('#num_likes').html(parseInt($('#Ciudad_LIKE_CIUDAD').val())+1);
+	}
+	function likePlus1(){
+	$.ajax({
+		  url : '<?php echo Yii::app()->request->baseUrl; ?>?r=ciudad/meGusta&id='+$('#Visita_ID_CIUDAD').val(),
+		  type: 'GET',
+		  async: true,
+		  dataType : 'jsonp',
+		  data: '',
+	      error : console.log('Failed!'),		  
+		  success: function(data, textStatus, jqXHR) {
+			$('#Ciudad_LIKE_CIUDAD').val($('#Ciudad_LIKE_CIUDAD').val()+1);
+		  }
+		});
+		actualizaLikes($('#Ciudad_LIKE_CIUDAD').val()+1);
+	}
 	jQuery.throughObject = function(obj) {
 		for (var attr in obj) {
 			if (attr == 'extract'){
@@ -101,7 +118,10 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
     		});
     	}', 'updater' => 'js:function (item) {
     		ciudadSeleccionada = map[item].id;
+			like_ciu = map[item].likes;
 			$(\'#Visita_ID_CIUDAD\').val(ciudadSeleccionada);
+			$(\'#Ciudad_LIKE_CIUDAD\').val(like_ciu);
+			$(\'#num_likes\').html(\'<b>\'+like_ciu+\'</b>\');
 			saveSessionIdCiudad();
 			
             // refresh your grid
@@ -110,9 +130,8 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 			// Show information div
 			$("#CityInfo").css("display","inline-block");
 
-
-
 			$("#CityTitle").html("<h2>"+map[item].label+"</h2>");
+			//alert(map[item].likes);
 			$("#Counter").html(map[item].likes);
 			$("#CityOpinion").html(map[item].comm);
 			getDesc(map[item].label); 
@@ -132,8 +151,8 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 
 <div id='CityInfo'>
 	<div id='CityTitle'></div>
-	<div id="LikeStats">
-		<div id="Counter"></div>
+	<div id="LikeStats" onClick="likePlus1();">
+		<span id="num_likes"></span>likes!
 	</div>
 	<hr>
 	<div id="CityDescription"></div>
@@ -208,7 +227,7 @@ $this -> widget('bootstrap.widgets.TbTypeahead', array(
 	<fieldset>
 		<div class="input-append">
 <?php echo $form->hiddenField($modelVisita,'ID_CIUDAD'); ?>
-
+<?php echo $form->hiddenField($modelCiudad,'LIKE_CIUDAD'); ?>
 <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
  'name'=>'Visita[FECHA_VISITA]',
  'attribute'=>'fecha',

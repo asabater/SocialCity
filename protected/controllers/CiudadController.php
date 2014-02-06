@@ -28,7 +28,7 @@ class CiudadController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'autocompletaCiudades'),
+				'actions'=>array('index','view', 'autocompletaCiudades', 'meGusta'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -241,6 +241,7 @@ class CiudadController extends Controller
 				$return_array[] = array(
 						'label'=>$ciudad["NOM_CIUDAD"],
 						'value'=>$ciudad["NOM_CIUDAD"],
+						'likes'=>$ciudad["LIKE_CIUDAD"],
 						'nom'=>$ciudad["_CIUDAD"],
 				);
 			}
@@ -249,7 +250,18 @@ class CiudadController extends Controller
 		}
 	}
 	
+	
 	public function actionCiudades(){
 		$this->render('ciudades');
+	}
+	
+	public function actionMegusta(){
+		if (isset($_GET['id'])) {
+			$id = $_GET['id'];
+			//Yii::app()->db->createCommand($sql)->execute();
+			$sql = "UPDATE ciudad SET LIKE_CIUDAD = LIKE_CIUDAD + 1 WHERE ID_CIUDAD = ".$id;
+			Yii::app()->db->createCommand($sql)->execute();
+			//$command=$connection->createCommand($sql)->execute();
+		}	
 	}
 }
