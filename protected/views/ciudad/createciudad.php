@@ -2,13 +2,12 @@
 /* @var $this CiudadController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this -> breadcrumbs = array('Ciudad', );
+$this -> breadcrumbs = array('Nueva Ciudad');
 
 //$this -> menu = array( array('label' => 'Create Ciudad', 'url' => array('create')), array('label' => 'Manage Ciudad', 'url' => array('admin')), );
 $model2=new Ciudad();
 
 ?>
-
 <?php
 $addform=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
    	'id'=>'agregaCiudad',
