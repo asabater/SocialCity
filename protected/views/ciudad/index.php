@@ -24,11 +24,13 @@ $('#form').submit(function(){
 ?>
 <?php //var_dump($amigos);?>
 <script>
-	function actualizaLikes(num){
-		$('#num_likes').html(parseInt($('#Ciudad_LIKE_CIUDAD').val())+1);
+	function actualizaLikes(){
+		nuevo_valor = parseInt($('#Ciudad_LIKE_CIUDAD').val())+1;
+		$('#Ciudad_LIKE_CIUDAD').val(nuevo_valor);
+		$('#num_likes').html(nuevo_valor);
 	}
 	function likePlus1(){
-	$.ajax({
+		$.ajax({
 		  url : '<?php echo Yii::app()->request->baseUrl; ?>?r=ciudad/meGusta&id='+$('#Visita_ID_CIUDAD').val(),
 		  type: 'GET',
 		  async: true,
@@ -36,10 +38,12 @@ $('#form').submit(function(){
 		  data: '',
 	      error : console.log('Failed!'),		  
 		  success: function(data, textStatus, jqXHR) {
-			$('#Ciudad_LIKE_CIUDAD').val($('#Ciudad_LIKE_CIUDAD').val()+1);
+			    // $('#Ciudad_LIKE_CIUDAD').val( function(i, oldval) {
+			        // return ++oldval;
+			    // });
 		  }
 		});
-		actualizaLikes($('#Ciudad_LIKE_CIUDAD').val()+1);
+		actualizaLikes();
 	}
 	jQuery.throughObject = function(obj) {
 		for (var attr in obj) {
