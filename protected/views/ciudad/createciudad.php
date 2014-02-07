@@ -23,7 +23,7 @@ $addform=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <legend>Agregar Ciudad</legend>
 <?php echo $addform->errorSummary($model); ?>
 
-<?php echo $addform->textField($model,'NOM_CIUDAD',array('id'=>"Ciudad",'class'=>'span4','size'=>300,'maxlength'=>300,'placeholder' => 'Introduce una ciudad',)); ?>
+<?php echo $addform->textField($model,'NOM_CIUDAD',array('id'=>"Ciudad",'class'=>'span4','size'=>50,'maxlength'=>50,'placeholder' => 'Introduce una ciudad',)); ?>
 	<legend></legend>
 	<div class="alert in alert-block alert-success" style="display:none"></div>
 	<div class="row-user-single">
@@ -34,7 +34,7 @@ $addform=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $addform->hiddenField($model,'PAGE_ID_CIUDAD',array('value'=>"1000",)); ?>
 
-<?php echo $addform->textArea($model,'COMM_CIUDAD',array('class'=>'span4','size'=>50,'maxlength'=>50,'placeholder' => 'Introduce un comentario',)); ?>
+<?php echo $addform->textArea($model,'COMM_CIUDAD',array('class'=>'span4','size'=>300,'maxlength'=>300,'placeholder' => 'Introduce un comentario',)); ?>
 
 <?php $this->widget('bootstrap.widgets.TbButton', array(
 			'id'=>'NOM_CIUDAD',
